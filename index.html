@@ -1,55 +1,1103 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Web Pribadi | Dani Ardani</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Informatika Kelas X | Roadmap Semester 1</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-main: #0B0F19;
+            --bg-card: #131B2E;
+            --bg-card-hover: #1A253F;
+            --primary: #3B82F6;
+            --primary-glow: rgba(59, 130, 246, 0.4);
+            --accent-emerald: #10B981;
+            --accent-amber: #F59E0B;
+            --accent-purple: #8B5CF6;
+            --accent-cyan: #06B6D4;
+            --text-main: #F1F5F9;
+            --text-muted: #94A3B8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-active: rgba(59, 130, 246, 0.5);
+            --glass-bg: rgba(19, 27, 46, 0.7);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.12) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(6, 182, 212, 0.05) 0px, transparent 60%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 5rem 1.5rem;
+        }
+
+        /* Navbar & Header */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            margin-bottom: 2.5rem;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .logo-text h1 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .nav-stats {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.4rem 0.9rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Hero / Prologue */
+        .hero {
+            position: relative;
+            background: linear-gradient(180deg, rgba(30, 41, 67, 0.5) 0%, rgba(19, 27, 46, 0.8) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            margin-bottom: 3rem;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(59, 130, 246, 0.15);
+            color: #60A5FA;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .hero h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.25;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #FFFFFF 30%, #94A3B8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p.prolog-text {
+            color: #CBD5E1;
+            font-size: 1rem;
+            max-width: 800px;
+            margin-bottom: 1.8rem;
+        }
+
+        /* Progress Card */
+        .progress-box {
+            background: rgba(11, 15, 25, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.25rem 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .progress-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .progress-bar-bg {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 40%;
+            background: linear-gradient(90deg, #10B981, #3B82F6);
+            border-radius: 999px;
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
+            transition: width 1s ease-in-out;
+        }
+
+        .progress-stats-pill {
+            text-align: right;
+        }
+
+        .progress-stats-pill .num {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #38BDF8;
+            font-family: 'JetBrains Mono', monospace;
+            line-height: 1;
+        }
+
+        .progress-stats-pill .lbl {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.2rem;
+        }
+
+        /* Section Title & Filter */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .section-title h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .section-title p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .filter-group {
+            display: flex;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            padding: 0.25rem;
+            border-radius: 12px;
+            gap: 0.25rem;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        /* Roadmap Timeline Container */
+        .roadmap-timeline {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 1.75rem;
+        }
+
+        /* Connecting vertical line */
+        .roadmap-timeline::before {
+            content: '';
+            position: absolute;
+            top: 2rem;
+            bottom: 2rem;
+            left: 36px;
+            width: 3px;
+            background: linear-gradient(180deg, #10B981 0%, #3B82F6 40%, rgba(255, 255, 255, 0.1) 80%);
+            border-radius: 999px;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .roadmap-timeline::before {
+                left: 24px;
+            }
+        }
+
+        /* Roadmap Item Card */
+        .roadmap-card {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 72px 1fr;
+            gap: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @media (max-width: 768px) {
+            .roadmap-card {
+                grid-template-columns: 50px 1fr;
+                gap: 1rem;
+                padding: 1.25rem 1rem;
+            }
+        }
+
+        .roadmap-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(59, 130, 246, 0.15);
+        }
+
+        /* Node Badge Icon */
+        .node-badge {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 800;
+            background: #1E293B;
+            border: 2px solid var(--border-color);
+            align-self: flex-start;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .node-badge {
+                width: 44px;
+                height: 44px;
+                font-size: 1rem;
+                border-radius: 12px;
+            }
+        }
+
+        /* Statuses */
+        .status-completed .node-badge {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: #10B981;
+            color: #10B981;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .status-current {
+            border-color: #3B82F6;
+            background: linear-gradient(135deg, rgba(30, 48, 80, 0.7) 0%, rgba(19, 27, 46, 0.9) 100%);
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.25);
+            animation: pulseCard 3s infinite alternate;
+        }
+
+        @keyframes pulseCard {
+            0% { border-color: rgba(59, 130, 246, 0.5); }
+            100% { border-color: rgba(56, 189, 248, 0.9); }
+        }
+
+        .status-current .node-badge {
+            background: #3B82F6;
+            border-color: #60A5FA;
+            color: #FFFFFF;
+            box-shadow: 0 0 20px var(--primary-glow);
+            animation: pulseIcon 2s infinite;
+        }
+
+        @keyframes pulseIcon {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .status-locked {
+            opacity: 0.75;
+        }
+
+        .status-locked .node-badge {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+        }
+
+        /* Card Content */
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .step-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+
+        .tag-status {
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .tag-completed {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34D399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .tag-current {
+            background: rgba(59, 130, 246, 0.2);
+            color: #93C5FD;
+            border: 1px solid rgba(59, 130, 246, 0.4);
+        }
+
+        .tag-locked {
+            background: rgba(255, 255, 255, 0.05);
+            color: #94A3B8;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #F8FAFC;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .topic-pill {
+            font-size: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            color: #CBD5E1;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .card-footer-action {
+            margin-top: 0.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #38BDF8;
+        }
+
+        .btn-launch {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--primary);
+            color: white;
+            padding: 0.45rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .btn-launch:hover {
+            background: #2563EB;
+            transform: translateX(3px);
+        }
+
+        /* Modal Preview */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            max-width: 600px;
+            width: 100%;
+            padding: 2rem;
+            position: relative;
+            transform: scale(0.95);
+            transition: transform 0.25s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.2s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+
+        .modal-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h4 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+            color: #F8FAFC;
+        }
+
+        .modal-content-section {
+            margin-bottom: 1.25rem;
+        }
+
+        .modal-content-section h5 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #38BDF8;
+            margin-bottom: 0.4rem;
+        }
+
+        .modal-content-section ul {
+            padding-left: 1.2rem;
+            font-size: 0.9rem;
+            color: #CBD5E1;
+        }
+
+        .modal-content-section ul li {
+            margin-bottom: 0.35rem;
+        }
+
+        .modal-actions {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3B82F6, #2563EB);
+            border: none;
+            color: white;
+            padding: 0.6rem 1.4rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--primary-glow);
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.6);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+        }
+    </style>
 </head>
 <body>
 
-  <header>
-    <h1>Halo, Saya Dani Ardani 👋</h1>
-    <p>Selamat datang di web pribadi saya</p>
-  </header>
+    <div class="container">
+        <!-- Top Navbar -->
+        <header class="navbar">
+            <div class="logo-area">
+                <div class="logo-icon">💻</div>
+                <div class="logo-text">
+                    <h1>INFORMATIKA SMA KELAS X</h1>
+                    <p>Fase E • Kurikulum Merdeka (BSKAP 2025)</p>
+                </div>
+            </div>
+            <div class="nav-stats">
+                <div class="badge-pill">
+                    <span>🗓️</span>
+                    <span>Semester 1</span>
+                </div>
+                <div class="badge-pill">
+                    <span>🚀</span>
+                    <span>Modul 3 / 6 Aktif</span>
+                </div>
+            </div>
+        </header>
 
-  <nav>
-    <a href="#tentang">Tentang</a>
-    <a href="#skill">Skill</a>
-    <a href="#kontak">Kontak</a>
-  </nav>
+        <!-- Prologue / Hero Section -->
+        <section class="hero">
+            <div class="hero-tag">✨ Peta Petualangan Belajar</div>
+            <h2>Selamat Datang di Hub Pembelajaran Informatika</h2>
+            <p class="prolog-text">
+                Di semester ini, kamu akan membangun fondasi komputasi yang kokoh—mulai dari memahami bagaimana mesin komputer berpikir (I-P-O & OS), menguasai literasi digital lateral, menaklukkan anomali data (<em>Data Cleansing</em>), hingga merancang logika kode pemrograman. Ikuti jalurnya secara bertahap dan taklukkan setiap tantangan!
+            </p>
 
-  <main>
-    <section id="tentang">
-      <h2>Tentang Saya</h2>
-      <p>
-        Saya tertarik pada teknologi, pendidikan, dan pengembangan web.
-        Website ini dibuat menggunakan HTML, CSS, dan JavaScript lalu
-        di-hosting gratis dengan GitHub Pages.
-      </p>
-    </section>
+            <!-- Live Progress Bar -->
+            <div class="progress-box">
+                <div class="progress-info">
+                    <div class="progress-labels">
+                        <span style="color: #94A3B8;">Progres Penyelesaian Semester 1</span>
+                        <span style="color: #38BDF8; font-weight: 700;" id="progress-percent">33.3% Selesai</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="progress-bar" style="width: 33.3%;"></div>
+                    </div>
+                </div>
+                <div class="progress-stats-pill">
+                    <div class="num">02<span style="font-size: 1rem; color: var(--text-muted);">/06</span></div>
+                    <div class="lbl">Modul Terlewati</div>
+                </div>
+            </div>
+        </section>
 
-    <section id="skill">
-      <h2>Keahlian</h2>
-      <ul>
-        <li>HTML & CSS</li>
-        <li>JavaScript Dasar</li>
-        <li>Bootstrap</li>
-        <li>Literasi Digital</li>
-      </ul>
-    </section>
+        <!-- Main Roadmap Section -->
+        <section>
+            <div class="section-header">
+                <div class="section-title">
+                    <h3>🗺️ Peta Alur Materi Pembelajaran</h3>
+                    <p>Klik salah satu modul untuk melihat detail capaian atau langsung mulai belajar.</p>
+                </div>
+                <div class="filter-group">
+                    <button class="filter-btn active" onclick="filterRoadmap('all')">Semua</button>
+                    <button class="filter-btn" onclick="filterRoadmap('completed')">✅ Selesai</button>
+                    <button class="filter-btn" onclick="filterRoadmap('current')">🚀 Sedang Aktif</button>
+                    <button class="filter-btn" onclick="filterRoadmap('locked')">🔒 Segera</button>
+                </div>
+            </div>
 
-    <section id="kontak">
-      <h2>Kontak</h2>
-      <button onclick="tampilPesan()">Klik untuk menyapa</button>
-      <p id="pesan"></p>
-    </section>
-  </main>
+            <!-- Timeline Cards -->
+            <div class="roadmap-timeline" id="timelineContainer">
 
-  <footer>
-    <p>© 2026 Dani Ardani | Dibuat dengan ❤️</p>
-  </footer>
+                <!-- Modul 1 -->
+                <div class="roadmap-card status-completed" data-status="completed" onclick="openModal(1)">
+                    <div class="node-badge">✓</div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="step-label">MODUL 01 • SISTEM KOMPUTER</span>
+                            <span class="tag-status tag-completed">✅ SELESAI</span>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">⏱️ 4 JP</span>
+                        </div>
+                        <div class="card-title">
+                            1. Simulasi I-P-O & Sistem Operasi (OS)
+                            <span style="font-size: 1rem; opacity: 0.7;">↗</span>
+                        </div>
+                        <p class="card-desc">
+                            Memahami arsitektur komputer Von Neumann, alur dinamika Input-Process-Output, serta peran krusial OS dalam manajemen memori, proses, dan antarmuka.
+                        </p>
+                        <div class="card-tags">
+                            <span class="topic-pill">#VonNeumann</span>
+                            <span class="topic-pill">#MemoryManagement</span>
+                            <span class="topic-pill">#ProcessScheduling</span>
+                        </div>
+                        <div class="card-footer-action">
+                            <span>Lihat Rangkuman Materi →</span>
+                        </div>
+                    </div>
+                </div>
 
-  <script src="script.js"></script>
+                <!-- Modul 2 -->
+                <div class="roadmap-card status-completed" data-status="completed" onclick="openModal(2)">
+                    <div class="node-badge">✓</div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="step-label">MODUL 02 • LITERASI DIGITAL</span>
+                            <span class="tag-status tag-completed">✅ SELESAI</span>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">⏱️ 4 JP</span>
+                        </div>
+                        <div class="card-title">
+                            2. Membaca Bermakna & Membaca Lateral
+                            <span style="font-size: 1rem; opacity: 0.7;">↗</span>
+                        </div>
+                        <p class="card-desc">
+                            Melatih nalar kritis dalam membedakan fakta vs opini di ruang digital, teknik fact-checking multi-tab lateral, serta verifikasi kredibilitas sumber informasi.
+                        </p>
+                        <div class="card-tags">
+                            <span class="topic-pill">#LateralReading</span>
+                            <span class="topic-pill">#FactChecking</span>
+                            <span class="topic-pill">#CriticalThinking</span>
+                        </div>
+                        <div class="card-footer-action">
+                            <span>Lihat Rangkuman Materi →</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modul 3 (CURRENT ACTIVE) -->
+                <div class="roadmap-card status-current" data-status="current" onclick="openModal(3)">
+                    <div class="node-badge">03</div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="step-label" style="color: #60A5FA;">MODUL 03 • ANALISIS DATA (AKTIF)</span>
+                            <span class="tag-status tag-current">👈 SEDANG DIPELAJARI</span>
+                            <span style="font-size: 0.75rem; color: #93C5FD;">⏱️ 6 JP</span>
+                        </div>
+                        <div class="card-title" style="color: #FFFFFF;">
+                            3. Pengolahan & Pembersihan Data (Data Cleansing)
+                            <span class="btn-launch" onclick="event.stopPropagation(); window.location.href='#materi-3'">Buka Modul 🚀</span>
+                        </div>
+                        <p class="card-desc" style="color: #E2E8F0;">
+                            Menerapkan prinsip <em>Garbage In, Garbage Out (GIGO)</em>, membedah anomali data (duplikat, null, inkonsistensi), serta praktik langsung cleansing data menggunakan Spreadsheet/Excel.
+                        </p>
+                        <div class="card-tags">
+                            <span class="topic-pill" style="background: rgba(59, 130, 246, 0.2); color: #93C5FD;">#DataCleansing</span>
+                            <span class="topic-pill" style="background: rgba(59, 130, 246, 0.2); color: #93C5FD;">#GIGO_Principle</span>
+                            <span class="topic-pill" style="background: rgba(59, 130, 246, 0.2); color: #93C5FD;">#SpreadsheetTools</span>
+                        </div>
+                        <div class="card-footer-action" style="color: #60A5FA; font-weight: 700;">
+                            <span>👉 Klik untuk Masuk ke Ruang Belajar Modul 3</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modul 4 -->
+                <div class="roadmap-card status-locked" data-status="locked" onclick="openModal(4)">
+                    <div class="node-badge">🔒</div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="step-label">MODUL 04 • KEAMANAN & ETIKA</span>
+                            <span class="tag-status tag-locked">🔒 SEGERA HADIR</span>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">⏱️ 4 JP</span>
+                        </div>
+                        <div class="card-title">
+                            4. Keamanan Digital, Privasi Akun & HaKI / Lisensi
+                            <span style="font-size: 1rem; opacity: 0.5;">🔒</span>
+                        </div>
+                        <p class="card-desc">
+                            Prinsip perlindungan data pribadi (PDP), implementasi Two-Factor Authentication (2FA), mitigasi phishing, serta penghargaan Hak Cipta dan lisensi perangkat lunak.
+                        </p>
+                        <div class="card-tags">
+                            <span class="topic-pill">#CyberSecurity</span>
+                            <span class="topic-pill">#2FA_Auth</span>
+                            <span class="topic-pill">#CreativeCommons</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modul 5 -->
+                <div class="roadmap-card status-locked" data-status="locked" onclick="openModal(5)">
+                    <div class="node-badge">🔒</div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="step-label">MODUL 05 • BERPIKIR KOMPUTASIONAL</span>
+                            <span class="tag-status tag-locked">🔒 SEGERA HADIR</span>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">⏱️ 6 JP</span>
+                        </div>
+                        <div class="card-title">
+                            5. Struktur Data Dasar (Array, Stack, Queue) & Algoritma
+                            <span style="font-size: 1rem; opacity: 0.5;">🔒</span>
+                        </div>
+                        <p class="card-desc">
+                            Representasi data komputasional: LIFO pada Stack, FIFO pada Queue, serta indeks Array. Dilanjutkan algoritma pencarian (Linear/Binary Search) & pengurutan (Sorting).
+                        </p>
+                        <div class="card-tags">
+                            <span class="topic-pill">#DataStructures</span>
+                            <span class="topic-pill">#Stack_LIFO</span>
+                            <span class="topic-pill">#Queue_FIFO</span>
+                            <span class="topic-pill">#Searching_Sorting</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modul 6 -->
+                <div class="roadmap-card status-locked" data-status="locked" onclick="openModal(6)">
+                    <div class="node-badge">🔒</div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="step-label">MODUL 06 • ALGORITMA & PEMROGRAMAN</span>
+                            <span class="tag-status tag-locked">🔒 SEGERA HADIR</span>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">⏱️ 8 JP</span>
+                        </div>
+                        <div class="card-title">
+                            6. Algoritma & Pemrograman Dasar (Pseudocode / Bahasa Pemrograman)
+                            <span style="font-size: 1rem; opacity: 0.5;">🔒</span>
+                        </div>
+                        <p class="card-desc">
+                            Menerjemahkan ide logis ke dalam Pseudocode terstruktur, variabel, tipe data, kondisional (IF-ELSE), perulangan (Loops), dan pembuatan program sederhana pertama.
+                        </p>
+                        <div class="card-tags">
+                            <span class="topic-pill">#Pseudocode</span>
+                            <span class="topic-pill">#ControlFlow</span>
+                            <span class="topic-pill">#PythonOrC</span>
+                            <span class="topic-pill">#CodingLogic</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Modal Detail Popup -->
+        <div class="modal-overlay" id="detailModal" onclick="closeModal(event)">
+            <div class="modal-box" onclick="event.stopPropagation()">
+                <button class="modal-close" onclick="forceCloseModal()">✕</button>
+                <div class="modal-header">
+                    <span id="modalMeta" class="step-label" style="color: #38BDF8;">MODUL</span>
+                    <h4 id="modalTitle">Judul Modul</h4>
+                </div>
+                <div class="modal-content-section">
+                    <h5>🎯 Tujuan Pembelajaran (TP)</h5>
+                    <ul id="modalGoals">
+                        <!-- Filled by JS -->
+                    </ul>
+                </div>
+                <div class="modal-content-section">
+                    <h5>📌 Materi & Topik Bahasan</h5>
+                    <ul id="modalTopics">
+                        <!-- Filled by JS -->
+                    </ul>
+                </div>
+                <div class="modal-content-section">
+                    <h5>💡 Aktivitas & Praktik Siswa</h5>
+                    <p id="modalActivity" style="font-size: 0.9rem; color: #CBD5E1;"></p>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-secondary" onclick="forceCloseModal()">Tutup</button>
+                    <a href="#" id="modalActionBtn" class="btn-primary">Mulai Pelajari Modul 🚀</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>💻 Modul Informatika Fase E (Kelas X SMA) • Semester 1</p>
+            <p style="font-size: 0.75rem; margin-top: 0.3rem;">Didesain untuk Pembelajaran Interaktif Siswa • Hosted on GitHub Pages</p>
+        </footer>
+    </div>
+
+    <!-- Script Interactive Logic -->
+    <script>
+        const moduleData = {
+            1: {
+                meta: "MODUL 01 • SISTEM KOMPUTER (SELESAI)",
+                title: "1. Simulasi I-P-O & Sistem Operasi (OS)",
+                goals: [
+                    "Memahami model arsitektur komputer Von Neumann.",
+                    "Menyimulasikan dinamika alur Input-Process-Output (I-P-O).",
+                    "Menganalisis peran dan fungsi sistem operasi dalam pengelolaan sumber daya hardware & user."
+                ],
+                topics: [
+                    "Siklus Mesin: Fetch, Decode, Execute.",
+                    "Struktur CPU, RAM, Storage, dan Bus Sistem.",
+                    "Fungsi OS: Manajemen Memori, Penjadwalan Proses (CPU Scheduling), File System, & Device Drivers."
+                ],
+                activity: "Simulasi visual interaktif 'CPU Simulator' dan studi kasus pelacakan alur data saat menekan tombol keyboard hingga tampil di monitor.",
+                btnText: "Buka Review Modul 1 ↗",
+                btnLink: "materi-01-ipo-os.html"
+            },
+            2: {
+                meta: "MODUL 02 • LITERASI DIGITAL (SELESAI)",
+                title: "2. Membaca Bermakna & Lateral",
+                goals: [
+                    "Membedakan fakta, opini, dan misinformasi/disinformasi di internet.",
+                    "Menerapkan teknik membaca lateral (lateral reading) dengan multi-tab fact checking.",
+                    "Mengevaluasi otoritas dan kredibilitas domain/sumber berita online."
+                ],
+                topics: [
+                    "Metode Verifikasi Informasi: Kredibilitas Penulis, Bukti, dan Konfirmasi Silang.",
+                    "Mengenal Bias Konfirmasi dan Algoritma Ruang Gema (Echo Chambers).",
+                    "Pemanfaatan Perkakas Cek Fakta Digital (Google Fact Check Explorer, dll)."
+                ],
+                activity: "Bedah kasus investigasi berita viral: siswa mencari 3 sumber pembanding independen untuk memvalidasi klaim berita.",
+                btnText: "Buka Review Modul 2 ↗",
+                btnLink: "materi-02-lateral-reading.html"
+            },
+            3: {
+                meta: "MODUL 03 • ANALISIS DATA (SEDANG AKTIF 👈)",
+                title: "3. Pengolahan & Pembersihan Data (Data Cleansing)",
+                goals: [
+                    "Memahami prinsip kritis GIGO (Garbage In, Garbage Out) dalam pengambilan keputusan berbasis data.",
+                    "Mengidentifikasi 4 jenis anomali data: duplikasi, missing values (null), format tidak konsisten, dan outliers/anomali nilai.",
+                    "Mempraktikkan teknik pembersihan data secara mandiri menggunakan fitur perkakas spreadsheet."
+                ],
+                topics: [
+                    "Konsep Kualitas Data (Data Integrity & Consistency).",
+                    "Fungsi Pembersihan Spreadsheet: TRIM, PROPER/UPPER, Remove Duplicates, Text-to-Columns, IF-ISBLANK.",
+                    "Validasi Data: Pengaturan batas nilai (Data Validation Rule) dan penanganan data kosong."
+                ],
+                activity: "Praktik Langsung 'Detektif Data': Mengunduh dataset kotor fiktif (data penjualan/siswa) lalu membersihkannya hingga siap diolah menjadi grafik laporan.",
+                btnText: "Masuk Ruang Belajar Modul 3 🚀",
+                btnLink: "materi-03-data-cleansing.html"
+            },
+            4: {
+                meta: "MODUL 04 • KEAMANAN & PRIVASI (SEGERA HADIR)",
+                title: "4. Keamanan Digital, Privasi Akun & HaKI / Lisensi",
+                goals: [
+                    "Memahami pentingnya proteksi identitas dan privasi data pribadi di ranah daring.",
+                    "Menerapkan mekanisme keamanan akun multi-lapis (Strong Password & 2FA).",
+                    "Memahami etika digital, Hak atas Kekayaan Intelektual (HaKI), dan lisensi open source / Creative Commons."
+                ],
+                topics: [
+                    "Prinsip Cyber Hygiene & Pencegahan Phishing / Social Engineering.",
+                    "Two-Factor Authentication (2FA) & Password Managers.",
+                    "Lisensi Karya Digital: Copyright vs Copyleft vs Creative Commons (CC BY, SA, NC, ND)."
+                ],
+                activity: "Audit keamanan akun pribadi mandiri dan simulasi identifikasi email phishing bertarget.",
+                btnText: "Lihat Silabus Modul 4",
+                btnLink: "#"
+            },
+            5: {
+                meta: "MODUL 05 • BERPIKIR KOMPUTASIONAL (SEGERA HADIR)",
+                title: "5. Struktur Data Dasar (Array, Stack, Queue) & Algoritma",
+                goals: [
+                    "Memahami representasi data terstruktur dalam komputasi.",
+                    "Membedakan perilaku mekanisme Stack (LIFO) dan Queue (FIFO).",
+                    "Menerapkan logika algoritma searching dan sorting sederhana."
+                ],
+                topics: [
+                    "Konsep Koleksi: Array & List Satu Dimensi.",
+                    "Mekanisme Stack (Push, Pop, Top) dan Queue (Enqueue, Dequeue).",
+                    "Algoritma Pengurutan (Bubble/Selection) & Pencarian (Linear vs Binary Search)."
+                ],
+                activity: "Simulasi peran fisik antrian loket tiket (Queue) dan tumpukan buku (Stack) serta pelacakan trace tabel algoritma.",
+                btnText: "Lihat Silabus Modul 5",
+                btnLink: "#"
+            },
+            6: {
+                meta: "MODUL 06 • PEMROGRAMAN DASAR (SEGERA HADIR)",
+                title: "6. Algoritma & Pemrograman Dasar (Pseudocode / Bahasa Pemrograman)",
+                goals: [
+                    "Merumuskan solusi komputasi dalam bentuk notasi Pseudocode standar.",
+                    "Mengimplementasikan struktur kontrol: sekuensial, percabangan (if-else), dan perulangan (loop).",
+                    "Membuat program modular sederhana untuk memecahkan persoalan sehari-hari."
+                ],
+                topics: [
+                    "Notasi Algoritmik & Pseudocode vs Flowchart.",
+                    "Variabel, Konstanta, dan Operator (Aritmatika & Logika).",
+                    "Struktur Kondisional (IF / ELSE IF / ELSE) dan Perulangan (FOR / WHILE).",
+                    "Pengenalan sintaks bahasa pemrograman (Python / C)."
+                ],
+                activity: "Proyek Mini Coding: Membuat program kalkulator indeks massa tubuh (BMI) atau kalkulator diskon belanja.",
+                btnText: "Lihat Silabus Modul 6",
+                btnLink: "#"
+            }
+        };
+
+        function openModal(id) {
+            const data = moduleData[id];
+            if (!data) return;
+
+            document.getElementById('modalMeta').innerText = data.meta;
+            document.getElementById('modalTitle').innerText = data.title;
+            
+            // Goals
+            const goalsList = document.getElementById('modalGoals');
+            goalsList.innerHTML = data.goals.map(g => `<li>${g}</li>`).join('');
+            
+            // Topics
+            const topicsList = document.getElementById('modalTopics');
+            topicsList.innerHTML = data.topics.map(t => `<li>${t}</li>`).join('');
+            
+            // Activity
+            document.getElementById('modalActivity').innerText = data.activity;
+            
+            // Button
+            const btn = document.getElementById('modalActionBtn');
+            btn.innerText = data.btnText;
+            btn.href = data.btnLink;
+
+            document.getElementById('detailModal').classList.add('active');
+        }
+
+        function closeModal(event) {
+            if (event.target.id === 'detailModal') {
+                document.getElementById('detailModal').classList.remove('active');
+            }
+        }
+
+        function forceCloseModal() {
+            document.getElementById('detailModal').classList.remove('active');
+        }
+
+        // Filter cards
+        function filterRoadmap(status) {
+            // Update button styles
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Filter cards
+            const cards = document.querySelectorAll('.roadmap-card');
+            cards.forEach(card => {
+                if (status === 'all' || card.getAttribute('data-status') === status) {
+                    card.style.display = 'grid';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // ESC Key Close Modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                forceCloseModal();
+            }
+        });
+    </script>
 </body>
 </html>
