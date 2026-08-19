@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dani Ardani | Profil & Portal Pembelajaran Informatika</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-main: #0B0F19;
+            --bg-card: rgba(19, 27, 46, 0.75);
+            --bg-card-hover: rgba(30, 41, 69, 0.95);
+            --primary: #38BDF8;
+            --primary-glow: rgba(56, 189, 248, 0.35);
+            --secondary: #818CF8;
+            --secondary-glow: rgba(129, 140, 248, 0.35);
+            --accent-green: #10B981;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(56, 189, 248, 0.4);
+            --radius-lg: 28px;
+            --radius-md: 16px;
+            --radius-sm: 10px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+            background-image: 
+                radial-gradient(circle at 50% 10%, rgba(56, 189, 248, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 20% 90%, rgba(129, 140, 248, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.08) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        /* Container Microsite */
+        .microsite-container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--bg-card);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem 1.75rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Profile Header */
+        .avatar-wrapper {
+            position: relative;
+            margin-bottom: 1.25rem;
+        }
+
+        .avatar-img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3.5px solid var(--primary);
+            box-shadow: 0 0 25px var(--primary-glow);
+            transition: transform 0.3s ease;
+        }
+
+        .avatar-img:hover {
+            transform: scale(1.05);
+        }
+
+        .badge-verified {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            background: #0284C7;
+            color: #fff;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            border: 2px solid var(--bg-main);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .profile-title {
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            margin-bottom: 8px;
+        }
+
+        .profile-tagline {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-align: center;
+            max-width: 400px;
+            line-height: 1.5;
+            margin-bottom: 2rem;
+        }
+
+        /* Portal Links Group */
+        .links-group {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        .portal-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: var(--radius-md);
+            padding: 18px 20px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid transparent;
+        }
+
+        .btn-content-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn-icon {
+            font-size: 1.6rem;
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .btn-text-block strong {
+            display: block;
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+
+        .btn-text-block span {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 500;
+        }
+
+        .btn-arrow {
+            font-size: 1.25rem;
+            transition: transform 0.2s ease;
+        }
+
+        /* Style Portal Kelas X */
+        .portal-btn.kelas-10 {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(15, 23, 42, 0.6));
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+
+        .portal-btn.kelas-10 .btn-icon {
+            background: rgba(56, 189, 248, 0.2);
+            color: var(--primary);
+        }
+
+        .portal-btn.kelas-10 .btn-text-block span {
+            color: #7DD3FC;
+        }
+
+        .portal-btn.kelas-10:hover {
+            border-color: var(--primary);
+            box-shadow: 0 8px 25px var(--primary-glow);
+            transform: translateY(-3px);
+        }
+
+        .portal-btn.kelas-10:hover .btn-arrow {
+            transform: translateX(5px);
+            color: var(--primary);
+        }
+
+        /* Style Portal Kelas XI */
+        .portal-btn.kelas-11 {
+            background: linear-gradient(135deg, rgba(129, 140, 248, 0.12), rgba(15, 23, 42, 0.6));
+            border-color: rgba(129, 140, 248, 0.3);
+        }
+
+        .portal-btn.kelas-11 .btn-icon {
+            background: rgba(129, 140, 248, 0.2);
+            color: var(--secondary);
+        }
+
+        .portal-btn.kelas-11 .btn-text-block span {
+            color: #A5B4FC;
+        }
+
+        .portal-btn.kelas-11:hover {
+            border-color: var(--secondary);
+            box-shadow: 0 8px 25px var(--secondary-glow);
+            transform: translateY(-3px);
+        }
+
+        .portal-btn.kelas-11:hover .btn-arrow {
+            transform: translateX(5px);
+            color: var(--secondary);
+        }
+
+        /* Social Icons Row */
+        .social-icons-row {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-circle-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .social-circle-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            transition: transform 0.2s ease;
+        }
+
+        .social-circle-btn:hover {
+            background: var(--primary);
+            color: #0B0F19;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+            transform: translateY(-3px);
+        }
+
+        .social-circle-btn:hover svg {
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        .microsite-footer {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.25rem;
+            width: 100%;
+        }
+
+        .microsite-footer p {
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="microsite-container">
+        <div class="avatar-wrapper">
+            <img src="https://res.cloudinary.com/dk8fg3wgm/image/upload/v1787125889/dani_bplklv.jpg" 
+                 alt="Foto Profil Dani Ardani" 
+                 class="avatar-img">
+            <span class="badge-verified" title="Pendidik Terverifikasi">✓</span>
+        </div>
+
+        <h1 class="profile-name">Dani Ardani</h1>
+        <div class="profile-title">Guru Informatika SMA • Edu-Tech Creator</div>
+        <p class="profile-tagline">
+            Media Belajar Interaktif Mandiri Berbasis Web • Kurikulum Merdeka
+        </p>
+
+        <div class="links-group">
+            
+            <a href="https://daniardani100-ai.github.io/inf" class="portal-btn kelas-10">
+                <div class="btn-content-left">
+                    <div class="btn-icon">🏛️</div>
+                    <div class="btn-text-block">
+                        <strong>Dashboard Informatika Kelas X</strong>
+                        <span>Fase E • Semester 1</span>
+                    </div>
+                </div>
+                <span class="btn-arrow">→</span>
+            </a>
+
+            <a href="https://daniardani100-ai.github.io/inf2" class="portal-btn kelas-11">
+                <div class="btn-content-left">
+                    <div class="btn-icon">💻</div>
+                    <div class="btn-text-block">
+                        <strong>Dashboard Informatika Kelas XI</strong>
+                        <span>Fase F • Semester 1</span>
+                    </div>
+                </div>
+                <span class="btn-arrow">→</span>
+            </a>
+
+        </div>
+
+        <div class="social-icons-row">
+            <a href="mailto:daniardani100@gmail.com" class="social-circle-btn" title="Kirim Email" aria-label="Email">
+                <svg viewBox="0 0 24 24">
+                    <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4H20ZM20 8L12 13L4 8V6L12 11L20 6V8Z"/>
+                </svg>
+            </a>
+
+            <a href="https://github.com/daniardani100-ai" target="_blank" rel="noopener noreferrer" class="social-circle-btn" title="GitHub Profile" aria-label="GitHub">
+                <svg viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017C2 16.446 4.87 20.198 8.84 21.52C9.34 21.61 9.52 21.3 9.52 21.03C9.52 20.79 9.51 19.99 9.51 19.14C6.73 19.74 6.14 17.96 6.14 17.96C5.68 16.81 5.03 16.5 5.03 16.5C4.12 15.88 5.1 15.9 5.1 15.9C6.1 15.97 6.63 16.93 6.63 16.93C7.52 18.45 8.97 18.02 9.54 17.76C9.63 17.11 9.89 16.67 10.17 16.42C7.95 16.17 5.62 15.31 5.62 11.5C5.62 10.39 6.01 9.51 6.66 8.81C6.55 8.56 6.21 7.54 6.76 6.15C6.76 6.15 7.61 5.88 9.54 7.2C10.35 6.98 11.21 6.86 12.07 6.86C12.93 6.86 13.79 6.98 14.6 7.2C16.53 5.87 17.38 6.15 17.38 6.15C17.93 7.54 17.59 8.56 17.48 8.81C18.13 9.51 18.52 10.39 18.52 11.5C18.52 15.32 16.18 16.17 13.95 16.42C14.31 16.73 14.63 17.33 14.63 18.26C14.63 19.6 14.62 20.67 14.62 21.03C14.62 21.31 14.8 21.62 15.31 21.52C19.28 20.19 22.15 16.446 22.15 12.017C22.15 6.484 17.52 2 12 2Z"/>
+                </svg>
+            </a>
+
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-circle-btn" title="Instagram" aria-label="Instagram">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069ZM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0ZM12 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324ZM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8ZM18.406 4.155a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881Z"/>
+                </svg>
+            </a>
+
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="social-circle-btn" title="YouTube Channel" aria-label="YouTube">
+                <svg viewBox="0 0 24 24">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814ZM9.545 15.568V8.432L15.818 12l-6.273 3.568Z"/>
+                </svg>
+            </a>
+        </div>
+
+        <footer class="microsite-footer">
+            <p>&copy; 2026 Dani Ardani • Pembelajaran Informatika SMA</p>
+            <p style="color: #64748B; font-size: 0.7rem;">Kurikulum Merdeka • Portal Belajar Digital</p>
+        </footer>
+    </main>
+
+</body>
+</html>
