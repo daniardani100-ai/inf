@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul 01: Simulasi I-P-O & Sistem Operasi (OS) | Informatika Kelas X</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-main: #0B0F19;
+            --bg-card: #131B2E;
+            --bg-card-alt: #1E293B;
+            --primary: #3B82F6;
+            --primary-glow: rgba(59, 130, 246, 0.4);
+            --accent-emerald: #10B981;
+            --accent-cyan: #06B6D4;
+            --accent-amber: #F59E0B;
+            --accent-purple: #8B5CF6;
+            --text-main: #F1F5F9;
+            --text-muted: #94A3B8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --glass-bg: rgba(19, 27, 46, 0.85);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.1) 0px, transparent 50%),
+                radial-gradient(at 50% 30%, rgba(6, 182, 212, 0.05) 0px, transparent 60%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 1.5rem 1.25rem 5rem 1.25rem;
+        }
+
+        /* Top Nav Bar */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            transition: all 0.2s;
+        }
+
+        .btn-back:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #38BDF8;
+            letter-spacing: 0.5px;
+        }
+
+        .complete-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .status-badge-done {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34D399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        .status-badge-active {
+            background: rgba(59, 130, 246, 0.15);
+            color: #93C5FD;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        /* Header Module */
+        .module-header {
+            background: linear-gradient(180deg, rgba(30, 41, 67, 0.6) 0%, rgba(19, 27, 46, 0.8) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-meta {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .tag-pill {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60A5FA;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .module-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            margin-bottom: 0.8rem;
+            line-height: 1.3;
+        }
+
+        .module-desc {
+            color: #CBD5E1;
+            font-size: 0.95rem;
+            max-width: 850px;
+        }
+
+        /* Tabs Nav */
+        .tab-nav {
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.4rem;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.6rem 1.1rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .tab-btn:hover {
+            color: #FFFFFF;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: #FFFFFF;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        /* Content Sections */
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .tab-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #F8FAFC;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .content-card h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #38BDF8;
+            margin: 1.5rem 0 0.6rem 0;
+        }
+
+        .content-card p {
+            color: #CBD5E1;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.65;
+        }
+
+        /* Callout Box */
+        .callout {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.25rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1.2rem 0;
+            font-size: 0.9rem;
+            color: #E2E8F0;
+        }
+
+        .callout-emerald {
+            background: rgba(16, 185, 129, 0.1);
+            border-left-color: var(--accent-emerald);
+        }
+
+        .callout-amber {
+            background: rgba(245, 158, 11, 0.1);
+            border-left-color: var(--accent-amber);
+        }
+
+        /* Grid Cards */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin: 1.2rem 0;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1.2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .content-card {
+                padding: 1.25rem;
+            }
+        }
+
+        .sub-card {
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1.25rem;
+        }
+
+        .sub-card-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #F8FAFC;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .sub-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0;
+        }
+
+        /* Interactive Diagram / Step Flow */
+        .flow-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(11, 15, 25, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem 1rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            gap: 0.5rem;
+        }
+
+        .flow-node {
+            flex: 1;
+            min-width: 140px;
+            text-align: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 1rem 0.75rem;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .flow-node.highlight {
+            border-color: #38BDF8;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+        }
+
+        .flow-node .icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .flow-node .title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #F8FAFC;
+        }
+
+        .flow-node .detail {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.2rem;
+        }
+
+        .flow-arrow {
+            font-size: 1.4rem;
+            color: #38BDF8;
+            font-weight: 800;
+            padding: 0 0.2rem;
+        }
+
+        /* Interactive Simulator */
+        .sim-box {
+            background: #0D1322;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 18px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .sim-input-row {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .sim-input {
+            flex: 1;
+            min-width: 240px;
+            background: #1A233A;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.6rem 1rem;
+            color: white;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .sim-input:focus {
+            border-color: var(--primary);
+        }
+
+        .sim-btn {
+            background: linear-gradient(135deg, #3B82F6, #2563EB);
+            border: none;
+            color: white;
+            font-weight: 700;
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            box-shadow: 0 0 15px var(--primary-glow);
+            transition: all 0.2s;
+        }
+        .sim-btn:hover {
+            opacity: 0.9;
+        }
+
+        .sim-pipeline {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .sim-pipeline {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pipe-stage {
+            background: #162036;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .pipe-stage.animating {
+            border-color: #34D399;
+            background: rgba(16, 185, 129, 0.15);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+            transform: scale(1.03);
+        }
+
+        .pipe-stage .stage-num {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #38BDF8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .pipe-stage .stage-name {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin: 0.3rem 0;
+            color: #F8FAFC;
+        }
+
+        .pipe-stage .stage-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            background: rgba(0,0,0,0.3);
+            padding: 0.4rem;
+            border-radius: 6px;
+            color: #FBBF24;
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            word-break: break-all;
+        }
+
+        /* Quiz Components */
+        .quiz-card {
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .quiz-question {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #F8FAFC;
+            margin-bottom: 0.8rem;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .quiz-opt {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #CBD5E1;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+        }
+
+        .quiz-opt:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #FFFFFF;
+        }
+
+        .quiz-opt.correct {
+            background: rgba(16, 185, 129, 0.2) !important;
+            border-color: #10B981 !important;
+            color: #34D399 !important;
+            font-weight: 600;
+        }
+
+        .quiz-opt.wrong {
+            background: rgba(239, 68, 68, 0.2) !important;
+            border-color: #EF4444 !important;
+            color: #F87171 !important;
+        }
+
+        .quiz-feedback {
+            font-size: 0.8rem;
+            margin-top: 0.6rem;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .feedback-correct {
+            background: rgba(16, 185, 129, 0.1);
+            color: #34D399;
+            border-left: 3px solid #10B981;
+        }
+
+        .feedback-wrong {
+            background: rgba(239, 68, 68, 0.1);
+            color: #F87171;
+            border-left: 3px solid #EF4444;
+        }
+
+        .quiz-score-box {
+            background: linear-gradient(135deg, rgba(30, 48, 80, 0.8), rgba(19, 27, 46, 0.9));
+            border: 1px solid #3B82F6;
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        /* Bottom Action Bar */
+        .bottom-bar {
+            margin-top: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .btn-action-primary {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+            border: none;
+            padding: 0.65rem 1.4rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-action-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.5);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #1E293B;
+            border: 1px solid #10B981;
+            color: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <nav class="top-nav">
+            <a href="index.html" class="btn-back">
+                ← Kembali ke Roadmap
+            </a>
+            <div class="nav-title">MODUL 01 • SISTEM KOMPUTER</div>
+            <div id="moduleStatusBadge" class="complete-status-badge status-badge-active">
+                <span>⚡</span>
+                <span id="statusBadgeText">Sedang Dipelajari</span>
+            </div>
+        </nav>
+
+        <header class="module-header">
+            <div class="module-meta">
+                <span class="tag-pill">Fase E (Kelas X)</span>
+                <span class="tag-pill" style="background: rgba(16,185,129,0.2); color:#34D399; border-color: rgba(16,185,129,0.3);">⏱️ Alokasi: 4 JP</span>
+                <span class="tag-pill" style="background: rgba(139,92,246,0.2); color:#C084FC; border-color: rgba(139,92,246,0.3);">Kurikulum Merdeka</span>
+            </div>
+            <h1 class="module-title">Simulasi Input-Process-Output (I-P-O) & Sistem Operasi</h1>
+            <p class="module-desc">
+                Pelajari bagaimana komputer bekerja dari tingkat fisik hingga logika instruksi: memahami arsitektur Von Neumann, siklus mesin (Fetch-Decode-Execute), peran vital OS sebagai jembatan hardware-user, serta visualisasi langsung alur aliran bit data.
+            </p>
+        </header>
+
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('tab-von-neumann', this)">🏛️ 1. Von Neumann & I-P-O</button>
+            <button class="tab-btn" onclick="switchTab('tab-os-role', this)">⚙️ 2. Peran & Fungsi OS</button>
+            <button class="tab-btn" onclick="switchTab('tab-tracing', this)">🔍 3. Kasus Pelacakan Data</button>
+            <button class="tab-btn" onclick="switchTab('tab-sim', this)">💻 4. Simulator Interaktif I-P-O</button>
+            <button class="tab-btn" onclick="switchTab('tab-quiz', this)">🎯 5. Uji Pemahaman (Kuis)</button>
+        </div>
+
+        <section id="tab-von-neumann" class="tab-pane active">
+            <div class="content-card">
+                <h3>🏛️ Arsitektur Komputer Von Neumann & Model I-P-O</h3>
+                <p>
+                    Hampir seluruh perangkat digital modern saat ini—mulai dari smartphone, laptop, hingga server superkomputer—menggunakan prinsip arsitektur yang dirancang oleh matematikawan <strong>John von Neumann</strong> pada tahun 1945.
+                </p>
+
+                <div class="callout">
+                    <strong>Prinsip Inti Von Neumann (Stored-Program Concept):</strong> Data dan instruksi program disimpan bersama di dalam satu memori utama (RAM) sebelum dieksekusi secara sekuensial oleh unit pemroses pusat (CPU).
+                </div>
+
+                <h4>Alur Dinamika I-P-O (Input - Process - Output - Storage)</h4>
+                
+                <div class="flow-container">
+                    <div class="flow-node">
+                        <div class="icon">⌨️</div>
+                        <div class="title">1. INPUT</div>
+                        <div class="detail">Keyboard, Mouse, Mic, Sensor, File Stream</div>
+                    </div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="flow-node highlight">
+                        <div class="icon">🧠</div>
+                        <div class="title">2. PROCESS (CPU)</div>
+                        <div class="detail">ALU, Control Unit, Register</div>
+                    </div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="flow-node">
+                        <div class="icon">🖥️</div>
+                        <div class="title">3. OUTPUT</div>
+                        <div class="detail">Monitor, Speaker, Printer, API Response</div>
+                    </div>
+                    <div class="flow-arrow">⇄</div>
+                    <div class="flow-node">
+                        <div class="icon">💾</div>
+                        <div class="title">4. STORAGE</div>
+                        <div class="detail">RAM (Volatile), SSD/HDD (Non-Volatile)</div>
+                    </div>
+                </div>
+
+                <h4>3 Komponen Utama Pemroses Data</h4>
+                <div class="grid-3">
+                    <div class="sub-card">
+                        <div class="sub-card-title">🎛️ Control Unit (CU)</div>
+                        <p>Bertindak sebagai "polisi lalu lintas" CPU. Mengambil instruksi dari memori, menguraikan maknanya (decode), dan mengatur transfer sinyal ke seluruh komponen komputer.</p>
+                    </div>
+                    <div class="sub-card">
+                        <div class="sub-card-title">➕ ALU (Arithmetic Logic Unit)</div>
+                        <p>Pabrik kalkulasi sesungguhnya. Melakukan operasi matematika (+, -, *, /) dan logika komparasi (AND, OR, NOT, >, <, ==).</p>
+                    </div>
+                    <div class="sub-card">
+                        <div class="sub-card-title">⚡ Registers</div>
+                        <p>Memori internal CPU berkecepatan ultra-tinggi namun berkapasitas sangat kecil untuk menyimpan variabel sementara saat komputasi berlangsung.</p>
+                    </div>
+                </div>
+
+                <h4>Siklus Mesin (Machine Cycle): Cara CPU Menjalankan 1 Perintah</h4>
+                <div class="callout callout-emerald">
+                    <strong>1. Fetch (Jemput):</strong> CU mengambil kode instruksi biner berikutnya dari RAM berdasarkan penunjuk <em>Program Counter (PC)</em>.<br>
+                    <strong>2. Decode (Terjemahkan):</strong> CU menerjemahkan opcode instruksi untuk mengetahui operasi apa yang diminta.<br>
+                    <strong>3. Execute (Eksekusi):</strong> ALU menjalankan instruksi tersebut (misal menjumlahkan dua register).<br>
+                    <strong>4. Store (Simpan Balik):</strong> Hasil akhir ditulis kembali ke register atau alamat RAM yang dituju.
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-os-role" class="tab-pane">
+            <div class="content-card">
+                <h3>⚙️ Peran Vital Sistem Operasi (Operating System)</h3>
+                <p>
+                    Perangkat keras (hardware) komputer hanyalah sekumpulan sirkuit silikon dan listrik mati jika tidak ada <strong>Sistem Operasi (OS)</strong>. OS adalah perangkat lunak sistem fundamental yang mengelola seluruh sumber daya perangkat keras dan menyediakan lingkungan kerja bagi aplikasi dan pengguna.
+                </p>
+
+                <div class="grid-2">
+                    <div class="sub-card">
+                        <div class="sub-card-title">📊 1. Manajemen Memori (RAM)</div>
+                        <p>Mengalokasikan blok alamat RAM ketika sebuah aplikasi dibuka dan membersihkannya (deallocation) saat ditutup agar aplikasi tidak saling menimpa memori (Crash / Blue Screen).</p>
+                    </div>
+                    <div class="sub-card">
+                        <div class="sub-card-title">⏳ 2. Manajemen Proses & CPU Scheduling</div>
+                        <p>Mengatur giliran jutaan instruksi aplikasi menggunakan algoritma penjadwalan (Round Robin, FCFS) sehingga komputer terasa bisa menjalankan banyak aplikasi bersamaan (<em>Multitasking</em>).</p>
+                    </div>
+                    <div class="sub-card">
+                        <div class="sub-card-title">📁 3. Manajemen File System</div>
+                        <p>Mengatur struktur penyimpanan fisik pada SSD/HDD menjadi struktur hierarki folder, izin akses (read/write/execute), dan kompresi data (NTFS, EXT4, APFS).</p>
+                    </div>
+                    <div class="sub-card">
+                        <div class="sub-card-title">🔌 4. Device Drivers & I/O Control</div>
+                        <p>Menjadi penerjemah antara kode perangkat lunak generik dengan spesifikasi teknis hardware unik (Printer, VGA, WebCam, Keyboard).</p>
+                    </div>
+                </div>
+
+                <h4>Arsitektur Berlapis Sistem Komputer</h4>
+                <div class="sub-card" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; line-height: 1.8; background: #0D1322;">
+                    🧑‍💻 <strong>USER (Pengguna)</strong><br>
+                    &nbsp;&nbsp;│<br>
+                    &nbsp;&nbsp;▼<br>
+                    📱 <strong>APPLICATION SOFTWARE</strong> (Browser, Game, Office, Spotify)<br>
+                    &nbsp;&nbsp;│ <em>(System Calls API)</em><br>
+                    &nbsp;&nbsp;▼<br>
+                    🖥️ <strong>OPERATING SYSTEM (Kernel & Drivers)</strong> (Windows, Linux, macOS, Android)<br>
+                    &nbsp;&nbsp;│ <em>(Electrical Signals / Bus)</em><br>
+                    &nbsp;&nbsp;▼<br>
+                    ⚙️ <strong>HARDWARE</strong> (CPU, RAM, GPU, Storage, Motherboard)
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-tracing" class="tab-pane">
+            <div class="content-card">
+                <h3>🔍 Studi Kasus: Menelusuri Jejak Data Saat Menekan Tombol Keyboard</h3>
+                <p>
+                    Pernahkah kamu berpikir apa yang terjadi di dalam mesin komputer saat kamu menekan tombol huruf <strong>'A'</strong> di keyboard hingga huruf itu muncul di layar monitor? Berikut runutan mikro-detiknya:
+                </p>
+
+                <div class="flow-container" style="flex-direction: column; align-items: stretch; gap: 1rem;">
+                    <div class="flow-node" style="text-align: left; display: flex; gap: 1rem; align-items: center;">
+                        <span style="font-size: 1.5rem;">1️⃣</span>
+                        <div>
+                            <strong style="color: #38BDF8;">Pemicu Fisik (Keyboard Switch):</strong>
+                            <p style="font-size: 0.85rem; color: #CBD5E1; margin-bottom: 0;">Kamu menekan tombol 'A'. Saklar mekanik terhubung dan mikrokontroler keyboard menghasilkan sinyal Scan Code biner <code>00011110</code>.</p>
+                        </div>
+                    </div>
+
+                    <div class="flow-node" style="text-align: left; display: flex; gap: 1rem; align-items: center;">
+                        <span style="font-size: 1.5rem;">2️⃣</span>
+                        <div>
+                            <strong style="color: #38BDF8;">Sinyal Interupsi Perangkat (Interrupt Request - IRQ):</strong>
+                            <p style="font-size: 0.85rem; color: #CBD5E1; margin-bottom: 0;">Driver USB mengirim sinyal interupsi ke CPU: "Hentikan sejenak pekerjaanmu, ada input keyboard baru!" CPU langsung merespons dan menyimpan kode ASCII (65 / 0x41) ke buffer RAM.</p>
+                        </div>
+                    </div>
+
+                    <div class="flow-node" style="text-align: left; display: flex; gap: 1rem; align-items: center;">
+                        <span style="font-size: 1.5rem;">3️⃣</span>
+                        <div>
+                            <strong style="color: #38BDF8;">Pemrosesan Kernel OS & Aplikasi:</strong>
+                            <p style="font-size: 0.85rem; color: #CBD5E1; margin-bottom: 0;">Sistem Operasi menerima event <code>KeyDown</code>, mengecek aplikasi mana yang sedang aktif (misal Microsoft Word atau Notepad), lalu meneruskan karakter 'A' ke memori aplikasi tersebut.</p>
+                        </div>
+                    </div>
+
+                    <div class="flow-node" style="text-align: left; display: flex; gap: 1rem; align-items: center;">
+                        <span style="font-size: 1.5rem;">4️⃣</span>
+                        <div>
+                            <strong style="color: #38BDF8;">Rendering Grafis (Output Display):</strong>
+                            <p style="font-size: 0.85rem; color: #CBD5E1; margin-bottom: 0;">Aplikasi meminta OS dan driver GPU merender glif bitmap huruf 'A'. Piksel-piksel pada panel monitor dinyalakan sesuai koordinat kursor. Seluruh proses ini hanya memakan waktu &plusmn; <strong>5-15 milidetik</strong>!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-sim" class="tab-pane">
+            <div class="content-card">
+                <h3>💻 Simulator Visual Alur I-P-O & Eksekusi CPU</h3>
+                <p>
+                    Uji coba langsung! Masukkan kata atau angka sederhana di bawah ini untuk melihat bagaimana data ditangkap oleh input buffer, diproses oleh CPU/ALU, dan dikirimkan ke layar monitor.
+                </p>
+
+                <div class="sim-box">
+                    <div class="sim-input-row">
+                        <input type="text" id="simUserInput" class="sim-input" placeholder="Ketik kata/angka (contoh: INFORMATIKA atau 42+8)" value="KODING">
+                        <button class="sim-btn" onclick="runIpoSimulation()">Jalankan Simulasi I-P-O ▶</button>
+                    </div>
+
+                    <div class="sim-pipeline">
+                        <div class="pipe-stage" id="stage-input">
+                            <div class="stage-num">Tahap 1</div>
+                            <div class="stage-name">📥 Input Buffer</div>
+                            <div class="stage-val" id="val-input">-</div>
+                            <small style="font-size: 0.7rem; color: #94A3B8; margin-top: 0.3rem; display:block;">Keyboard scan</small>
+                        </div>
+                        <div class="pipe-stage" id="stage-ram">
+                            <div class="stage-num">Tahap 2</div>
+                            <div class="stage-name">💾 RAM (ASCII / Hex)</div>
+                            <div class="stage-val" id="val-ram">-</div>
+                            <small style="font-size: 0.7rem; color: #94A3B8; margin-top: 0.3rem; display:block;">Staging Memory</small>
+                        </div>
+                        <div class="pipe-stage" id="stage-cpu">
+                            <div class="stage-num">Tahap 3</div>
+                            <div class="stage-name">🧠 CPU (ALU / Ops)</div>
+                            <div class="stage-val" id="val-cpu">-</div>
+                            <small style="font-size: 0.7rem; color: #94A3B8; margin-top: 0.3rem; display:block;">Process & Decode</small>
+                        </div>
+                        <div class="pipe-stage" id="stage-out">
+                            <div class="stage-num">Tahap 4</div>
+                            <div class="stage-name">🖥️ Display Render</div>
+                            <div class="stage-val" id="val-out" style="color: #34D399; font-weight: 700;">-</div>
+                            <small style="font-size: 0.7rem; color: #94A3B8; margin-top: 0.3rem; display:block;">Output Screen</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="callout callout-amber" id="simLogBox">
+                    <strong>Status Eksekusi:</strong> Siap menjalankan simulasi. Masukkan input dan klik tombol di atas.
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-quiz" class="tab-pane">
+            <div class="content-card">
+                <h3>🎯 Uji Pemahaman Formatif: I-P-O & Sistem Operasi</h3>
+                <p>Jawablah 10 pertanyaan di bawah ini untuk menguji pemahaman materi sistem komputer dan arsitektur OS.</p>
+
+                <div id="quizContainer"></div>
+
+                <div class="quiz-score-box" id="quizScoreBox">
+                    <h4 style="font-size: 1.3rem; margin-bottom: 0.4rem;" id="quizScoreTitle">Skor Kamu: 0 / 100</h4>
+                    <p id="quizScoreFeedback" style="color: #CBD5E1; font-size: 0.9rem; margin-bottom: 1rem;"></p>
+                    <button class="sim-btn" onclick="resetQuiz()">Ulangi Kuis 🔄</button>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bottom-bar">
+            <div>
+                <h4 style="font-size: 1rem; color: #F8FAFC;">Sudah Paham Materi Modul 01?</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Tandai modul ini sebagai selesai untuk membuka Modul 02 di Dashboard Roadmap.</p>
+            </div>
+            <div style="display: flex; gap: 0.8rem;">
+                <button class="btn-action-primary" id="btnMarkComplete" onclick="markModuleComplete()">
+                    <span>✅ Tandai Modul Selesai & Lanjut</span>
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <div class="toast" id="toastMsg">
+        <span id="toastIcon">🎉</span>
+        <span id="toastText">Status berhasil diperbarui!</span>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'informatika_x_sem1_roadmap';
+        const CURRENT_MODULE_ID = 1;
+
+        // Kuis Data (10 Soal Formatif Komprehensif)
+        const quizData = [
+            {
+                q: "1. Siapakah tokoh pionir yang merumuskan konsep arsitektur komputer di mana program dan data disimpan bersama dalam memori utama?",
+                opts: ["Alan Turing", "John von Neumann", "Charles Babbage", "Ada Lovelace"],
+                answer: 1,
+                explain: "John von Neumann merumuskan 'Stored-Program Concept' pada tahun 1945 yang menjadi fondasi arsitektur komputer modern."
+            },
+            {
+                q: "2. Komponen CPU yang bertugas melakukan operasi perhitungan matematika (penjumlahan, pengurangan) dan perbandingan logika adalah...",
+                opts: ["Control Unit (CU)", "Arithmetic Logic Unit (ALU)", "Register", "System Bus"],
+                answer: 1,
+                explain: "ALU (Arithmetic Logic Unit) adalah sirkuit digital di dalam CPU yang bertugas mengeksekusi operasi aritmatika dan perbandingan logika."
+            },
+            {
+                q: "3. Urutan siklus mesin (Machine Cycle) yang benar saat CPU memproses satu instruksi adalah...",
+                opts: ["Execute ➔ Fetch ➔ Decode ➔ Store", "Decode ➔ Fetch ➔ Execute ➔ Store", "Fetch ➔ Decode ➔ Execute ➔ Store", "Store ➔ Fetch ➔ Decode ➔ Execute"],
+                answer: 2,
+                explain: "Siklus mesin CPU selalu diawali dengan Fetch (mengambil instruksi dari RAM), Decode (menerjemahkan), Execute (eksekusi oleh ALU), dan Store (menyimpan hasil)."
+            },
+            {
+                q: "4. Mengapa memori RAM disebut bersifat 'Volatile'?",
+                opts: [
+                    "Karena kapasitasnya sangat besar",
+                    "Karena data yang tersimpan akan hilang begitu aliran daya listrik terputus",
+                    "Karena harganya jauh lebih murah dibandingkan SSD",
+                    "Karena tidak bisa dibaca oleh CPU secara langsung"
+                ],
+                answer: 1,
+                explain: "Volatile berarti sementara; data di dalam RAM membutuhkan arus listrik kontinu untuk menjaga muatannya. Jika listrik mati, datanya hilang."
+            },
+            {
+                q: "5. Apa fungsi utama dari 'Device Driver' dalam ekosistem Sistem Operasi?",
+                opts: [
+                    "Sebagai pendingin suhu kartu grafis saat bermain game",
+                    "Sebagai penerjemah instruksi standar OS ke protokol bahasa teknis hardware tertentu",
+                    "Sebagai antivirus otomatis untuk melindungi partisi harddisk",
+                    "Sebagai aplikasi untuk mengedit dokumen teks"
+                ],
+                answer: 1,
+                explain: "Device Driver adalah software perantara yang memungkinkan OS berkomunikasi secara akurat dengan perangkat keras spesifik dari berbagai manufaktur."
+            },
+            {
+                q: "6. Mekanisme yang memungkinkan sebuah komputer dengan 1 prosesor menjalankan browser, pemutar musik, dan aplikasi coding secara bersamaan disebut...",
+                opts: ["Overclocking", "Multitasking / CPU Scheduling", "Data Cleansing", "Formatting"],
+                answer: 1,
+                explain: "OS menggunakan teknik Multitasking dengan algoritma CPU Scheduling untuk membagi jatah waktu milidetik CPU ke berbagai aplikasi."
+            },
+            {
+                q: "7. Sinyal khusus yang dikirimkan oleh keyboard atau mouse ke CPU untuk meminta penanganan mendesak saat ada input pengguna disebut...",
+                opts: ["Interrupt Request (IRQ)", "Cache Miss", "Looping Statement", "Kernel Panic"],
+                answer: 0,
+                explain: "Interrupt Request (IRQ) adalah sinyal perangkat keras yang menginstruksikan CPU untuk menunda tugas sementara demi menangani event input pengguna."
+            },
+            {
+                q: "8. Bagian inti terdalam dari Sistem Operasi yang bertugas langsung mengontrol memori, hardware, dan proses sistem adalah...",
+                opts: ["User Interface (UI)", "Kernel", "Web Browser", "File Explorer"],
+                answer: 1,
+                explain: "Kernel adalah inti (core) dari OS yang memiliki kontrol penuh dan privilese tertinggi terhadap seluruh komponen hardware komputer."
+            },
+            {
+                q: "9. Pada model I-P-O, manakah kelompok perangkat berikut yang semuanya tergolong INPUT device?",
+                opts: [
+                    "Monitor, Speaker, Keyboard",
+                    "Keyboard, Mouse, Mikrofon, Pemindai Barcode",
+                    "Printer, RAM, SSD",
+                    "Proyektor, Mouse, CPU"
+                ],
+                answer: 1,
+                explain: "Keyboard, mouse, mikrofon, dan pemindai barcode bertugas memasukkan data mentah dari luar ke dalam sistem komputer."
+            },
+            {
+                q: "10. Di manakah instruksi sebuah game atau aplikasi disimpan ketika aplikasi tersebut sedang AKTIF dijalankan oleh siswa?",
+                opts: ["Hanya di flashdisk", "Di dalam RAM dan diproses oleh CPU", "Di dalam monitor", "Di dalam kabel power listrik"],
+                answer: 1,
+                explain: "Sesuai prinsip Von Neumann, saat aplikasi dijalankan, kodenya dimuat dari storage ke RAM agar CPU dapat membaca dan mengeksekusinya dengan cepat."
+            }
+        ];
+
+        let answeredCount = 0;
+        let score = 0;
+
+        function switchTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            btnElement.classList.add('active');
+        }
+
+        // Simulator Logic
+        function runIpoSimulation() {
+            const rawVal = document.getElementById('simUserInput').value.trim() || 'KODING';
+            const logBox = document.getElementById('simLogBox');
+
+            // Reset stages
+            document.querySelectorAll('.pipe-stage').forEach(s => s.classList.remove('animating'));
+            document.getElementById('val-input').innerText = '...';
+            document.getElementById('val-ram').innerText = '...';
+            document.getElementById('val-cpu').innerText = '...';
+            document.getElementById('val-out').innerText = '...';
+
+            logBox.innerHTML = `<strong>Status Eksekusi:</strong> [1/4] Menangkap sinyal input fisik keyboard...`;
+
+            // Step 1: Input
+            setTimeout(() => {
+                const stage1 = document.getElementById('stage-input');
+                stage1.classList.add('animating');
+                document.getElementById('val-input').innerText = `"${rawVal}"`;
+                logBox.innerHTML = `<strong>Status Eksekusi:</strong> [2/4] OS mengarahkan byte teks ke alamat memori RAM (ASCII Encoding)...`;
+            }, 400);
+
+            // Step 2: RAM ASCII
+            setTimeout(() => {
+                const stage2 = document.getElementById('stage-ram');
+                stage2.classList.add('animating');
+                const hexAscii = rawVal.split('').slice(0, 5).map(c => c.charCodeAt(0).toString(16).toUpperCase()).join(' ');
+                document.getElementById('val-ram').innerText = `0x${hexAscii}... (${rawVal.length} chars)`;
+                logBox.innerHTML = `<strong>Status Eksekusi:</strong> [3/4] CPU menjalankan siklus Fetch-Decode-Execute pada instruksi render...`;
+            }, 1200);
+
+            // Step 3: CPU
+            setTimeout(() => {
+                const stage3 = document.getElementById('stage-cpu');
+                stage3.classList.add('animating');
+                document.getElementById('val-cpu').innerText = `ALU: OK | Reg: [${rawVal.length * 8} bits]`;
+                logBox.innerHTML = `<strong>Status Eksekusi:</strong> [4/4] GPU & Driver Monitor menyalakan piksel display untuk menampilkan karakter. Selesai!`;
+            }, 2000);
+
+            // Step 4: Output
+            setTimeout(() => {
+                const stage4 = document.getElementById('stage-out');
+                stage4.classList.add('animating');
+                document.getElementById('val-out').innerText = rawVal;
+                showToast("Simulasi I-P-O Berhasil Dijalankan!", "⚡");
+            }, 2800);
+        }
+
+        // Quiz Render
+        function renderQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+
+            quizData.forEach((item, index) => {
+                const qHtml = `
+                    <div class="quiz-card" id="qcard-${index}">
+                        <div class="quiz-question">${item.q}</div>
+                        <div class="quiz-options">
+                            ${item.opts.map((opt, optIndex) => `
+                                <button class="quiz-opt" onclick="checkAnswer(${index}, ${optIndex}, this)">
+                                    ${String.fromCharCode(65 + optIndex)}. ${opt}
+                                </button>
+                            `).join('')}
+                        </div>
+                        <div class="quiz-feedback" id="feedback-${index}"></div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', qHtml);
+            });
+        }
+
+        function checkAnswer(qIndex, selectedOpt, btnElement) {
+            const q = quizData[qIndex];
+            const card = document.getElementById(`qcard-${qIndex}`);
+            const feedback = document.getElementById(`feedback-${qIndex}`);
+            const options = card.querySelectorAll('.quiz-opt');
+
+            // Disable other buttons for this question
+            options.forEach(b => b.onclick = null);
+
+            if (selectedOpt === q.answer) {
+                btnElement.classList.add('correct');
+                feedback.className = 'quiz-feedback show feedback-correct';
+                feedback.innerHTML = `<strong>✓ Benar!</strong> ${q.explain}`;
+                score += 10;
+            } else {
+                btnElement.classList.add('wrong');
+                options[q.answer].classList.add('correct');
+                feedback.className = 'quiz-feedback show feedback-wrong';
+                feedback.innerHTML = `<strong>✗ Kurang Tepat!</strong> Jawaban yang benar adalah <strong>${String.fromCharCode(65 + q.answer)}. ${q.opts[q.answer]}</strong>.<br>${q.explain}`;
+            }
+
+            answeredCount++;
+            if (answeredCount === quizData.length) {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            const scoreBox = document.getElementById('quizScoreBox');
+            const scoreTitle = document.getElementById('quizScoreTitle');
+            const feedback = document.getElementById('quizScoreFeedback');
+
+            scoreTitle.innerText = `Skor Akhir Kamu: ${score} / 100`;
+            if (score >= 80) {
+                feedback.innerText = "Luar biasa! Kamu sudah sangat memahami konsep Arsitektur Von Neumann, siklus mesin CPU, dan peran Sistem Operasi.";
+            } else if (score >= 60) {
+                feedback.innerText = "Bagus! Kamu sudah memahami sebagian besar materi. Coba ulas kembali tab 'Siklus Mesin' dan 'Peran OS' untuk pemahaman lebih dalam.";
+            } else {
+                feedback.innerText = "Tetap semangat! Pelajari kembali materi pada tab modul di atas lalu coba ulangi kuis ini lagi.";
+            }
+
+            scoreBox.style.display = 'block';
+            scoreBox.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetQuiz() {
+            answeredCount = 0;
+            score = 0;
+            document.getElementById('quizScoreBox').style.display = 'none';
+            renderQuiz();
+        }
+
+        // LocalStorage Integration
+        function getProgress() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                return saved ? JSON.parse(saved) : {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function updateProgressUI() {
+            const prog = getProgress();
+            const badge = document.getElementById('moduleStatusBadge');
+            const badgeText = document.getElementById('statusBadgeText');
+            const btnMark = document.getElementById('btnMarkComplete');
+
+            if (prog[CURRENT_MODULE_ID] === 'completed') {
+                badge.className = 'complete-status-badge status-badge-done';
+                badgeText.innerText = 'Sudah Selesai ✓';
+                btnMark.innerHTML = '<span>✓ Modul Sudah Tuntas (Buka Modul 02 →)</span>';
+            } else {
+                badge.className = 'complete-status-badge status-badge-active';
+                badgeText.innerText = 'Sedang Dipelajari';
+                btnMark.innerHTML = '<span>✅ Tandai Modul Selesai & Lanjut</span>';
+            }
+        }
+
+        function markModuleComplete() {
+            const prog = getProgress();
+            prog[CURRENT_MODULE_ID] = 'completed';
+
+            // Buka modul 2 secara otomatis jika belum dibuka
+            if (!prog[2] || prog[2] === 'locked') {
+                prog[2] = 'current';
+            }
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(prog));
+            updateProgressUI();
+            showToast("Modul 01 berhasil diselesaikan! Modul 02 kini terbuka 🎉", "🎉");
+
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+        }
+
+        function showToast(text, icon = "✅") {
+            const toast = document.getElementById('toastMsg');
+            document.getElementById('toastText').innerText = text;
+            document.getElementById('toastIcon').innerText = icon;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderQuiz();
+            updateProgressUI();
+        });
+    </script>
+</body>
+</html>
