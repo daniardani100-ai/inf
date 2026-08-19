@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul 03: Pengolahan & Pembersihan Data (Data Cleansing) | Informatika Kelas X</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-main: #0B0F19;
+            --bg-card: #131B2E;
+            --bg-card-alt: #1E293B;
+            --primary: #3B82F6;
+            --primary-glow: rgba(59, 130, 246, 0.4);
+            --accent-emerald: #10B981;
+            --accent-cyan: #06B6D4;
+            --accent-amber: #F59E0B;
+            --accent-rose: #F43F5E;
+            --accent-purple: #8B5CF6;
+            --text-main: #F1F5F9;
+            --text-muted: #94A3B8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --glass-bg: rgba(19, 27, 46, 0.85);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(6, 182, 212, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.1) 0px, transparent 50%),
+                radial-gradient(at 50% 30%, rgba(16, 185, 129, 0.05) 0px, transparent 60%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 1.5rem 1.25rem 5rem 1.25rem;
+        }
+
+        /* Top Nav Bar */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            transition: all 0.2s;
+        }
+
+        .btn-back:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #38BDF8;
+            letter-spacing: 0.5px;
+        }
+
+        .complete-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .status-badge-done {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34D399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        .status-badge-active {
+            background: rgba(59, 130, 246, 0.15);
+            color: #93C5FD;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        /* Header Module */
+        .module-header {
+            background: linear-gradient(180deg, rgba(20, 35, 60, 0.6) 0%, rgba(19, 27, 46, 0.8) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-meta {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .tag-pill {
+            background: rgba(6, 182, 212, 0.2);
+            color: #22D3EE;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .module-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            margin-bottom: 0.8rem;
+            line-height: 1.3;
+        }
+
+        .module-desc {
+            color: #CBD5E1;
+            font-size: 0.95rem;
+            max-width: 850px;
+        }
+
+        /* Tabs Nav */
+        .tab-nav {
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.4rem;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.6rem 1.1rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .tab-btn:hover {
+            color: #FFFFFF;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: #FFFFFF;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        /* Content Sections */
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .tab-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #F8FAFC;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .content-card h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #38BDF8;
+            margin: 1.5rem 0 0.6rem 0;
+        }
+
+        .content-card p {
+            color: #CBD5E1;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.65;
+        }
+
+        /* Callouts */
+        .callout {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.25rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1.2rem 0;
+            font-size: 0.9rem;
+            color: #E2E8F0;
+        }
+        .callout-amber {
+            background: rgba(245, 158, 11, 0.1);
+            border-left-color: var(--accent-amber);
+        }
+        .callout-rose {
+            background: rgba(244, 63, 94, 0.1);
+            border-left-color: var(--accent-rose);
+        }
+        .callout-emerald {
+            background: rgba(16, 185, 129, 0.1);
+            border-left-color: var(--accent-emerald);
+        }
+
+        /* Grids */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin: 1.2rem 0;
+        }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1.2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-4 {
+                grid-template-columns: 1fr;
+            }
+            .content-card {
+                padding: 1.25rem;
+            }
+        }
+
+        .sub-card {
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1.25rem;
+        }
+
+        .sub-card-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #F8FAFC;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .sub-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0;
+        }
+
+        /* Code box syntax */
+        .code-pill {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(0, 0, 0, 0.3);
+            color: #FBBF24;
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        /* Interactive Clean Lab */
+        .lab-container {
+            background: #0D1322;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 18px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .lab-toolbar {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.2rem;
+            background: #162036;
+            padding: 0.75rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .lab-btn {
+            background: #1E293B;
+            border: 1px solid var(--border-color);
+            color: #F1F5F9;
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s;
+        }
+        .lab-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+        .lab-btn.active-action {
+            background: #10B981;
+            border-color: #10B981;
+            color: white;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            text-align: left;
+            background: #131B2E;
+        }
+
+        .data-table th {
+            background: #1E293B;
+            color: #38BDF8;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .data-table td {
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #CBD5E1;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .data-table tr.dirty-row {
+            background: rgba(244, 63, 94, 0.08);
+        }
+
+        .data-table tr.cleaned-row {
+            background: rgba(16, 185, 129, 0.08);
+        }
+
+        .badge-err {
+            background: rgba(244, 63, 94, 0.2);
+            color: #FB7185;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+        }
+
+        .badge-ok {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34D399;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+        }
+
+        /* Quiz Components */
+        .quiz-card {
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .quiz-question {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #F8FAFC;
+            margin-bottom: 0.8rem;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .quiz-opt {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #CBD5E1;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+        }
+
+        .quiz-opt:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #FFFFFF;
+        }
+
+        .quiz-opt.correct {
+            background: rgba(16, 185, 129, 0.2) !important;
+            border-color: #10B981 !important;
+            color: #34D399 !important;
+            font-weight: 600;
+        }
+
+        .quiz-opt.wrong {
+            background: rgba(239, 68, 68, 0.2) !important;
+            border-color: #EF4444 !important;
+            color: #F87171 !important;
+        }
+
+        .quiz-feedback {
+            font-size: 0.8rem;
+            margin-top: 0.6rem;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .feedback-correct {
+            background: rgba(16, 185, 129, 0.1);
+            color: #34D399;
+            border-left: 3px solid #10B981;
+        }
+
+        .feedback-wrong {
+            background: rgba(239, 68, 68, 0.1);
+            color: #F87171;
+            border-left: 3px solid #EF4444;
+        }
+
+        .quiz-score-box {
+            background: linear-gradient(135deg, rgba(30, 48, 80, 0.8), rgba(19, 27, 46, 0.9));
+            border: 1px solid #3B82F6;
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        /* Bottom Action Bar */
+        .bottom-bar {
+            margin-top: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .btn-action-primary {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+            border: none;
+            padding: 0.65rem 1.4rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-action-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.5);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #1E293B;
+            border: 1px solid #10B981;
+            color: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <nav class="top-nav">
+            <a href="index.html" class="btn-back">
+                ← Kembali ke Roadmap
+            </a>
+            <div class="nav-title">MODUL 03 • ANALISIS DATA</div>
+            <div id="moduleStatusBadge" class="complete-status-badge status-badge-active">
+                <span>⚡</span>
+                <span id="statusBadgeText">Sedang Dipelajari</span>
+            </div>
+        </nav>
+
+        <header class="module-header">
+            <div class="module-meta">
+                <span class="tag-pill">Fase E (Kelas X)</span>
+                <span class="tag-pill" style="background: rgba(6,182,212,0.2); color:#22D3EE; border-color: rgba(6,182,212,0.3);">⏱️ Alokasi: 6 JP</span>
+                <span class="tag-pill" style="background: rgba(139,92,246,0.2); color:#C084FC; border-color: rgba(139,92,246,0.3);">Kurikulum Merdeka</span>
+            </div>
+            <h1 class="module-title">Pengolahan & Pembersihan Data (Data Cleansing)</h1>
+            <p class="module-desc">
+                Pelajari seni merapikan dataset mentah sebelum dianalisis: kuasai prinsip kritis <em>Garbage In, Garbage Out (GIGO)</em>, identifikasi 4 anomali data (duplikasi, missing value, inkonsistensi, salah format), serta terapkan formula pembersihan di Spreadsheet secara mandiri.
+            </p>
+        </header>
+
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('tab-gigo', this)">🗑️ 1. Prinsip GIGO</button>
+            <button class="tab-btn" onclick="switchTab('tab-anomaly', this)">🔬 2. Anomali Data</button>
+            <button class="tab-btn" onclick="switchTab('tab-formula', this)">🛠️ 3. Formula Spreadsheet</button>
+            <button class="tab-btn" onclick="switchTab('tab-lab', this)">🧪 4. Lab Pembersihan Live</button>
+            <button class="tab-btn" onclick="switchTab('tab-quiz', this)">🎯 5. Uji Pemahaman (Kuis)</button>
+        </div>
+
+        <section id="tab-gigo" class="tab-pane active">
+            <div class="content-card">
+                <h3>🗑️ Konsep Integritas Data & Prinsip GIGO</h3>
+                <p>
+                    Dalam era komputasi modern, data adalah bahan bakar utama pengambilan keputusan (<em>Data-Driven Decision Making</em>). Namun, secanggih apa pun algoritma machine learning atau secantik apa pun grafik laporan yang dibuat, semuanya akan sia-sia jika data yang diinputkan berkualitas buruk.
+                </p>
+
+                <div class="callout callout-rose">
+                    <strong>Prinsip GIGO (Garbage In, Garbage Out):</strong> Jika data masukan (input) mengandung galat, duplikasi, atau sampah informasi, maka luaran analisis (output) dan keputusan strategis yang diambil dipastikan akan cacat atau menyesatkan.
+                </div>
+
+                <h4>Mengapa Data Cleansing Menyita 80% Waktu Data Scientist?</h4>
+                <div class="grid-2">
+                    <div class="sub-card">
+                        <div class="sub-card-title">⚠️ Sumber Kotornya Data Mentah</div>
+                        <p>Data mentah biasanya berasal dari human error saat pengisian form kuesioner, perbedaan format tanggal antar aplikasi, kegagalan sensor IoT, hingga penggabungan dua database yang berbeda struktur.</p>
+                    </div>
+                    <div class="sub-card">
+                        <div class="sub-card-title">💎 Dampak Pembersihan Data (Clean Data)</div>
+                        <p>Data yang bersih menjamin keakuratan visualisasi grafik, mencegah kerugian finansial akibat salah hitung agregasi, serta menjaga integritas integritas sistem data sekolah maupun industri.</p>
+                    </div>
+                </div>
+
+                <h4>3 Dimensi Utama Kualitas Data</h4>
+                <div class="grid-3" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem;">
+                    <div class="sub-card">
+                        <div class="sub-card-title">✅ Akurasi (Accuracy)</div>
+                        <p>Nilai data mencerminkan fakta sebenarnya (contoh: NISN 10 digit angka valid).</p>
+                    </div>
+                    <div class="sub-card">
+                        <div class="sub-card-title">🧩 Kelengkapan (Completeness)</div>
+                        <p>Tidak ada kolom penting yang kosong (<em>Missing Values / Null</em>) tanpa alasan logis.</p>
+                    </div>
+                    <div class="sub-card">
+                        <div class="sub-card-title">🔄 Konsistensi (Consistency)</div>
+                        <p>Format penulisan seragam di seluruh baris (contoh: "Laki-laki" vs "L" vs "pria").</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-anomaly" class="tab-pane">
+            <div class="content-card">
+                <h3>🔬 4 Jenis Anomali Data yang Wajib Dideteksi</h3>
+                <p>
+                    Sebelum membersihkan dataset, seorang analis harus mampu mendiagnosis jenis "penyakit" yang ada pada data. Berikut adalah 4 anomali data yang paling sering ditemukan:
+                </p>
+
+                <div class="grid-4">
+                    <div class="sub-card">
+                        <div class="sub-card-title" style="color: #FB7185;">1. Data Duplikat (Duplicate Records)</div>
+                        <p>Baris identik yang tercatat lebih dari sekali (misalnya siswa menekan tombol submit 2 kali pada formulir Google Form).</p>
+                    </div>
+                    <div class="sub-card">
+                        <div class="sub-card-title" style="color: #FBBF24;">2. Nilai Kosong / Hilang (Missing Values)</div>
+                        <p>Sel yang bernilai <code>NULL</code>, kosong, atau <code>#N/A</code> karena responden sengaja melewati kolom atau terjadi kegagalan jaringan saat pengiriman data.</p>
+                    </div>
+                    <div class="sub-card">
+                        <div class="sub-card-title" style="color: #60A5FA;">3. Spasi Liar & Inkonsistensi Huruf</div>
+                        <p>Spasi ganda di tengah atau spasi tak kasat mata di awal/akhir teks (<em>Leading/Trailing spaces</em>), serta variasi penulisan seperti <code>JAKARTA</code>, <code>jakarta</code>, dan <code>Jakarta</code>.</p>
+                    </div>
+                    <div class="sub-card">
+                        <div class="sub-card-title" style="color: #C084FC;">4. Format & Tipe Data Tidak Valid</div>
+                        <p>Angka yang tersimpan sebagai teks (sehingga tidak bisa dijumlahkan dengan rumus <code>SUM</code>) atau penulisan tanggal terbalik (DD/MM/YYYY vs MM/DD/YYYY).</p>
+                    </div>
+                </div>
+
+                <div class="callout callout-amber">
+                    <strong>Contoh Kasus Ekstrem:</strong> Rumus <code>VLOOKUP</code> atau <code>COUNTIF</code> pada Spreadsheet akan menganggap <code>"Budi"</code> dan <code>"Budi "</code> (dengan spasi di ujung) sebagai dua entitas yang berbeda sama sekali!
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-formula" class="tab-pane">
+            <div class="content-card">
+                <h3>🛠️ Kamus Fungsi Pembersihan di Spreadsheet (Excel / Google Sheets)</h3>
+                <p>
+                    Berikut adalah perkakas dan formula esensial yang digunakan oleh analis data profesional untuk membersihkan dataset secara instan:
+                </p>
+
+                <div class="grid-2">
+                    <div class="sub-card">
+                        <div class="sub-card-title">✂️ <span class="code-pill">=TRIM(text)</span></div>
+                        <p>Menghapus seluruh spasi berlebih di awal, akhir, dan merapikan spasi ganda di tengah kata menjadi spasi tunggal.</p>
+                    </div>
+                    <div class="sub-card">
+                        <div class="sub-card-title">🔤 <span class="code-pill">=PROPER(text)</span></div>
+                        <p>Mengubah huruf pertama setiap kata menjadi huruf kapital dan sisanya huruf kecil (contoh: <code>"aHMAD dANI"</code> ➔ <code>"Ahmad Dani"</code>).</p>
+                    </div>
+                    <div class="sub-card">
+                        <div class="sub-card-title">🔠 <span class="code-pill">=UPPER(text)</span> &amp; <span class="code-pill">=LOWER(text)</span></div>
+                        <p>Membuat seluruh teks seragam menjadi huruf kapital semua atau huruf kecil semua (sangat ideal untuk kolom Kode Pos / Email).</p>
+                    </div>
+                    <div class="sub-card">
+                        <div class="sub-card-title">❓ <span class="code-pill">=IF(ISBLANK(A2), "N/A", A2)</span></div>
+                        <p>Mendeteksi sel yang kosong dan memberikan nilai pengganti default terstandar (imputasi nilai).</p>
+                    </div>
+                </div>
+
+                <h4>Fitur Bawaan Spreadsheet Tanpa Rumus:</h4>
+                <div class="grid-2">
+                    <div class="sub-card">
+                        <div class="sub-card-title">🧹 Remove Duplicates (Hapus Duplikat)</div>
+                        <p>Menu <em>Data ➔ Data Cleanup ➔ Remove Duplicates</em> untuk menghapus baris duplikat berdasarkan kolom kunci unik (seperti NISN atau No ID).</p>
+                    </div>
+                    <div class="sub-card">
+                        <div class="sub-card-title">🛡️ Data Validation (Validasi Data)</div>
+                        <p>Mencegah data kotor masuk dengan membuat menu dropdown pilihan terbatas (contoh: hanya bisa memilih <code>X-A</code>, <code>X-B</code>, <code>X-C</code>) atau membatasi rentang angka 0-100.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-lab" class="tab-pane">
+            <div class="content-card">
+                <h3>🧪 Laboratorium Praktik: Detektif Pembersih Data</h3>
+                <p>
+                    Di bawah ini adalah dataset pendaftaran siswa fiktif yang masih "kotor" (mengandung spasi liar, duplikasi, kapitalisasi acak, dan nilai null). Klik tombol perkakas di bilah alat untuk membersihkannya secara bertahap!
+                </p>
+
+                <div class="lab-container">
+                    <div class="lab-toolbar">
+                        <button class="lab-btn" id="btnTrim" onclick="applyCleansing('trim')">✂️ 1. Terapkan TRIM (Hapus Spasi Liar)</button>
+                        <button class="lab-btn" id="btnProper" onclick="applyCleansing('proper')">🔤 2. Terapkan PROPER (Standarisasi Nama)</button>
+                        <button class="lab-btn" id="btnDedup" onclick="applyCleansing('dedup')">🧹 3. Hapus Baris Duplikat</button>
+                        <button class="lab-btn" id="btnNull" onclick="applyCleansing('null')">🩹 4. Isi Nilai Null (Imputasi)</button>
+                        <button class="lab-btn" style="background: rgba(239, 68, 68, 0.2); color: #F87171; border-color: rgba(239,68,68,0.4);" onclick="resetLabData()">🔄 Reset Data Kotor</button>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table" id="dataTableLive">
+                            <thead>
+                                <tr>
+                                    <th>No ID</th>
+                                    <th>Nama Lengkap Siswa</th>
+                                    <th>Kota Domisili</th>
+                                    <th>Nilai Tes Masuk</th>
+                                    <th>Status Diagnosa</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                                </tbody>
+                        </table>
+                    </div>
+
+                    <div class="callout callout-emerald" id="labStatusNotice" style="margin-top: 1rem; margin-bottom: 0;">
+                        <strong>Status Dataset:</strong> Data masih mengandung 4 anomali. Gunakan tombol perkakas di atas untuk memperbaikinya!
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-quiz" class="tab-pane">
+            <div class="content-card">
+                <h3>🎯 Uji Pemahaman Formatif: Data Cleansing & Spreadsheet</h3>
+                <p>Jawablah 10 pertanyaan di bawah ini untuk menguji pemahaman teknik pengolahan data mentah.</p>
+
+                <div id="quizContainer"></div>
+
+                <div class="quiz-score-box" id="quizScoreBox">
+                    <h4 style="font-size: 1.3rem; margin-bottom: 0.4rem;" id="quizScoreTitle">Skor Kamu: 0 / 100</h4>
+                    <p id="quizScoreFeedback" style="color: #CBD5E1; font-size: 0.9rem; margin-bottom: 1rem;"></p>
+                    <button class="lab-btn" style="padding: 0.6rem 1.4rem; font-size: 0.9rem; background: var(--primary);" onclick="resetQuiz()">Ulangi Kuis 🔄</button>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bottom-bar">
+            <div>
+                <h4 style="font-size: 1rem; color: #F8FAFC;">Sudah Paham Materi Modul 03?</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Tandai modul ini sebagai selesai untuk membuka Modul 04 (Keamanan & Privasi Akun) di Roadmap.</p>
+            </div>
+            <div style="display: flex; gap: 0.8rem;">
+                <button class="btn-action-primary" id="btnMarkComplete" onclick="markModuleComplete()">
+                    <span>✅ Tandai Modul Selesai & Buka Modul 04 🚀</span>
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <div class="toast" id="toastMsg">
+        <span id="toastIcon">🎉</span>
+        <span id="toastText">Status berhasil diperbarui!</span>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'informatika_x_sem1_roadmap';
+        const CURRENT_MODULE_ID = 3;
+
+        // Data Lab Awal (Kotor)
+        const initialDirtyData = [
+            { id: "S101", name: "  andi   prasetyo  ", city: "JAKARTA", score: "88", note: "Spasi liar (Leading & Trailing)" },
+            { id: "S102", name: "budi SANTOSO", city: "bandung", score: "92", note: "Inkonsistensi Huruf Besar/Kecil" },
+            { id: "S103", name: "Citra Dewi", city: "Surabaya", score: null, note: "Nilai Kosong (Missing Value)" },
+            { id: "S102", name: "budi SANTOSO", city: "bandung", score: "92", note: "Duplikat Persis S102" },
+            { id: "S104", name: "DANI HERMAWAN", city: "yogyakarta", score: "75", note: "Kota belum terkapitalisasi rapi" }
+        ];
+
+        let currentLabData = JSON.parse(JSON.stringify(initialDirtyData));
+
+        function renderLabTable() {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+
+            currentLabData.forEach((row, idx) => {
+                const isClean = !row.note.includes('Spasi') && !row.note.includes('Inkonsistensi') && !row.note.includes('Duplikat') && !row.note.includes('Kosong') && !row.note.includes('belum');
+                
+                const tr = document.createElement('tr');
+                tr.className = isClean ? 'cleaned-row' : 'dirty-row';
+
+                tr.innerHTML = `
+                    <td><strong>${row.id}</strong></td>
+                    <td><code>${row.name}</code></td>
+                    <td>${row.city}</td>
+                    <td>${row.score !== null ? row.score : '<span style="color:#FB7185;">[NULL]</span>'}</td>
+                    <td>${isClean ? '<span class="badge-ok">✓ Bersih</span>' : `<span class="badge-err">⚠️ ${row.note}</span>`}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function applyCleansing(type) {
+            if (type === 'trim') {
+                currentLabData.forEach(r => {
+                    r.name = r.name.trim().replace(/\s+/g, ' ');
+                });
+                showToast("Fungsi TRIM berhasil membersihkan seluruh spasi berlebih!", "✂️");
+                document.getElementById('btnTrim').classList.add('active-action');
+            } else if (type === 'proper') {
+                currentLabData.forEach(r => {
+                    r.name = r.name.toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+                    r.city = r.city.toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+                });
+                showToast("Fungsi PROPER berhasil menyeragamkan kapitalisasi nama & kota!", "🔤");
+                document.getElementById('btnProper').classList.add('active-action');
+            } else if (type === 'dedup') {
+                const seen = new Set();
+                currentLabData = currentLabData.filter(r => {
+                    const duplicate = seen.has(r.id);
+                    seen.add(r.id);
+                    return !duplicate;
+                });
+                showToast("Fitur Remove Duplicates berhasil membuang baris ganda!", "🧹");
+                document.getElementById('btnDedup').classList.add('active-action');
+            } else if (type === 'null') {
+                currentLabData.forEach(r => {
+                    if (r.score === null) {
+                        r.score = "0 (Imputasi)";
+                    }
+                });
+                showToast("Nilai kosong berhasil diisi dengan nilai standar!", "🩹");
+                document.getElementById('btnNull').classList.add('active-action');
+            }
+
+            // Update diagnosa
+            currentLabData.forEach(r => {
+                let issues = [];
+                if (r.name.startsWith(' ') || r.name.endsWith(' ') || r.name.includes('   ')) issues.push('Spasi');
+                if (r.name === r.name.toUpperCase() || r.name === r.name.toLowerCase()) issues.push('Kapitalisasi');
+                if (r.score === null) issues.push('Nilai Kosong');
+                
+                r.note = issues.length > 0 ? issues.join(', ') : 'Siap Dianalisis';
+            });
+
+            renderLabTable();
+
+            const allClean = currentLabData.every(r => r.note === 'Siap Dianalisis');
+            if (allClean && currentLabData.length === 4) {
+                document.getElementById('labStatusNotice').innerHTML = `<strong>🎉 Luar Biasa!</strong> Seluruh dataset kini 100% bersih, rapi, dan siap diolah menjadi visualisasi grafik laporan!`;
+            }
+        }
+
+        function resetLabData() {
+            currentLabData = JSON.parse(JSON.stringify(initialDirtyData));
+            document.querySelectorAll('.lab-btn').forEach(b => b.classList.remove('active-action'));
+            renderLabTable();
+            document.getElementById('labStatusNotice').innerHTML = `<strong>Status Dataset:</strong> Data dikembalikan ke kondisi kotor awal.`;
+            showToast("Dataset direset kembali ke data kotor.", "🔄");
+        }
+
+        // Kuis Data (10 Soal Formatif)
+        const quizData = [
+            {
+                q: "1. Prinsip utama dalam ilmu komputer yang menyatakan bahwa kualitas output bergantung penuh pada kualitas input data adalah...",
+                opts: ["FIFO (First In, First Out)", "GIGO (Garbage In, Garbage Out)", "LIFO (Last In, First Out)", "CPU Scheduling"],
+                answer: 1,
+                explain: "GIGO (Garbage In, Garbage Out) menegaskan jika data input salah/kotor, hasil analisis juga pasti salah/rusak."
+            },
+            {
+                q: "2. Fungsi Spreadsheet yang tepat untuk menghapus spasi di awal dan akhir teks tanpa sengaja menghapus spasi tunggal antar kata adalah...",
+                opts: ["=CLEAN()", "=TRIM()", "=DELETE()", "=REMOVE()"],
+                answer: 1,
+                explain: "Fungsi =TRIM() secara khusus membersihkan spasi ekstra di awal, akhir, serta merapikan spasi ganda di tengah teks."
+            },
+            {
+                q: "3. Jika sel A1 berisi teks 'jAKARTA sELATAN', formula apa yang akan mengubah teks tersebut menjadi 'Jakarta Selatan'?",
+                opts: ["=UPPER(A1)", "=PROPER(A1)", "=LOWER(A1)", "=CAPITAL(A1)"],
+                answer: 1,
+                explain: "Formula =PROPER() mengubah huruf pertama setiap kata menjadi huruf kapital dan huruf berikutnya menjadi huruf kecil."
+            },
+            {
+                q: "4. Sebuah sel pada kolom nilai matematika kosong sama sekali. Anomali ini dalam istilah basis data disebut...",
+                opts: ["Duplicate Record", "Missing Value / Null", "Typo Syntax", "Overflow"],
+                answer: 1,
+                explain: "Missing value atau NULL adalah kondisi hilangnya nilai data pada atribut/kolom tertentu."
+            },
+            {
+                q: "5. Mengapa rumus =SUM(A1:A5) terkadang menghasilkan angka 0 padahal sel tersebut tampak berisi angka?",
+                opts: [
+                    "Karena layar monitor mati",
+                    "Karena angka tersebut tersimpan dalam format Teks (Text Format), bukan format Angka (Number)",
+                    "Karena keyboard tidak mendukung angka",
+                    "Karena spreadsheet kehabisan memori RAM"
+                ],
+                answer: 1,
+                explain: "Jika angka terformat sebagai tipe teks (sering ditandai tanda kutip atau rata kiri), fungsi agregasi aritmatika seperti SUM akan mengabaikannya."
+            },
+            {
+                q: "6. Fitur Spreadsheet apa yang berfungsi mencegah pengguna mengetikkan nama kelas yang salah dengan cara menyediakan menu dropdown pilihan terstandar?",
+                opts: ["Data Validation (Validasi Data)", "Conditional Formatting", "Freeze Panes", "AutoFit Column"],
+                answer: 0,
+                explain: "Data Validation dapat membatasi input pengguna menggunakan daftar kriteria (list of items / dropdown), sehingga mencegah terjadinya human error sejak awal."
+            },
+            {
+                q: "7. Manakah teknik yang digunakan untuk menangani baris duplikat yang identik di dalam lembar kerja?",
+                opts: ["Mengubah warna font menjadi putih", "Menggunakan fitur 'Remove Duplicates' pada menu Data", "Menghapus seluruh kolom lembar kerja", "Membuat grafik lingkaran"],
+                answer: 1,
+                explain: "Fitur Remove Duplicates secara otomatis memindai dan menghapus baris-baris rekaman yang bernilai identik berdasarkan kunci kolom."
+            },
+            {
+                q: "8. Jika kamu ingin mengganti sel kosong pada kolom alamat dengan teks default 'Belum Diisi', formula logika apa yang tepat?",
+                opts: [
+                    "=IF(ISBLANK(B2), 'Belum Diisi', B2)",
+                    "=COUNTIF(B2, 0)",
+                    "=TRIM('Belum Diisi')",
+                    "=AND(B2, 'Belum Diisi')"
+                ],
+                answer: 0,
+                explain: "Kombinasi =IF(ISBLANK(sel), nilai_jika_kosong, nilai_asli) digunakan untuk imputasi penggantian nilai kosong terstandar."
+            },
+            {
+                q: "9. Mengapa kolom NISN atau Nomor Telepon sebaiknya disimpan dalam tipe format Teks (Text) daripada format Angka (General/Number)?",
+                opts: [
+                    "Agar warnanya berubah menjadi biru",
+                    "Agar angka 0 (nol) di awal nomor tidak otomatis terhapus oleh sistem spreadsheet",
+                    "Agar nomor tersebut bisa dikalikan dengan diskon",
+                    "Agar file spreadsheet tidak bisa dibuka orang lain"
+                ],
+                answer: 1,
+                explain: "Format Number menganggap angka '0812' sebagai '812' (menghilangkan angka 0 di depan). Format Teks menjaga digit '0' tetap utuh."
+            },
+            {
+                q: "10. Apa tujuan akhir dari dilakukannya tahapan Pembersihan Data (Data Cleansing)?",
+                opts: [
+                    "Membuat ukuran file spreadsheet menjadi 0 KB",
+                    "Memastikan dataset akurat, konsisten, dan siap diolah menjadi visualisasi/keputusan tanpa galat",
+                    "Menghapus seluruh data agar tabel terlihat rapi dan kosong",
+                    "Mengunci akses spreadsheet dengan password rahasia"
+                ],
+                answer: 1,
+                explain: "Tujuan utama Data Cleansing adalah menjamin integritas, konsistensi, dan keakuratan dataset sebelum dilakukan analisis data lanjutan."
+            }
+        ];
+
+        let answeredCount = 0;
+        let score = 0;
+
+        function switchTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            btnElement.classList.add('active');
+        }
+
+        // Quiz Render
+        function renderQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+
+            quizData.forEach((item, index) => {
+                const qHtml = `
+                    <div class="quiz-card" id="qcard-${index}">
+                        <div class="quiz-question">${item.q}</div>
+                        <div class="quiz-options">
+                            ${item.opts.map((opt, optIndex) => `
+                                <button class="quiz-opt" onclick="checkAnswer(${index}, ${optIndex}, this)">
+                                    ${String.fromCharCode(65 + optIndex)}. ${opt}
+                                </button>
+                            `).join('')}
+                        </div>
+                        <div class="quiz-feedback" id="feedback-${index}"></div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', qHtml);
+            });
+        }
+
+        function checkAnswer(qIndex, selectedOpt, btnElement) {
+            const q = quizData[qIndex];
+            const card = document.getElementById(`qcard-${qIndex}`);
+            const feedback = document.getElementById(`feedback-${qIndex}`);
+            const options = card.querySelectorAll('.quiz-opt');
+
+            options.forEach(b => b.onclick = null);
+
+            if (selectedOpt === q.answer) {
+                btnElement.classList.add('correct');
+                feedback.className = 'quiz-feedback show feedback-correct';
+                feedback.innerHTML = `<strong>✓ Tepat Sekali!</strong> ${q.explain}`;
+                score += 10;
+            } else {
+                btnElement.classList.add('wrong');
+                options[q.answer].classList.add('correct');
+                feedback.className = 'quiz-feedback show feedback-wrong';
+                feedback.innerHTML = `<strong>✗ Kurang Tepat!</strong> Jawaban benar: <strong>${String.fromCharCode(65 + q.answer)}. ${q.opts[q.answer]}</strong>.<br>${q.explain}`;
+            }
+
+            answeredCount++;
+            if (answeredCount === quizData.length) {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            const scoreBox = document.getElementById('quizScoreBox');
+            const scoreTitle = document.getElementById('quizScoreTitle');
+            const feedback = document.getElementById('quizScoreFeedback');
+
+            scoreTitle.innerText = `Skor Akhir Kamu: ${score} / 100`;
+            if (score >= 80) {
+                feedback.innerText = "Luar biasa! Kamu telah menguasai keahlian pembersihan data (Data Cleansing) dan siap menghadapi dataset kotor di dunia nyata.";
+            } else if (score >= 60) {
+                feedback.innerText = "Bagus! Kamu sudah memahami anomali umum data. Coba pelajari ulang tab 'Formula Spreadsheet' untuk memperkuat penguasaan rumus.";
+            } else {
+                feedback.innerText = "Jangan menyerah! Ulas kembali materi pada tab di atas lalu coba ulangi kuis ini lagi.";
+            }
+
+            scoreBox.style.display = 'block';
+            scoreBox.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetQuiz() {
+            answeredCount = 0;
+            score = 0;
+            document.getElementById('quizScoreBox').style.display = 'none';
+            renderQuiz();
+        }
+
+        // LocalStorage Sync
+        function getProgress() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                return saved ? JSON.parse(saved) : {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function updateProgressUI() {
+            const prog = getProgress();
+            const badge = document.getElementById('moduleStatusBadge');
+            const badgeText = document.getElementById('statusBadgeText');
+            const btnMark = document.getElementById('btnMarkComplete');
+
+            if (prog[CURRENT_MODULE_ID] === 'completed') {
+                badge.className = 'complete-status-badge status-badge-done';
+                badgeText.innerText = 'Sudah Selesai ✓';
+                btnMark.innerHTML = '<span>✓ Modul Sudah Tuntas (Buka Modul 04 →)</span>';
+            } else {
+                badge.className = 'complete-status-badge status-badge-active';
+                badgeText.innerText = 'Sedang Dipelajari';
+                btnMark.innerHTML = '<span>✅ Tandai Modul Selesai & Buka Modul 04 🚀</span>';
+            }
+        }
+
+        function markModuleComplete() {
+            const prog = getProgress();
+            prog[CURRENT_MODULE_ID] = 'completed';
+
+            // Buka Modul 4 jika masih terkunci
+            if (!prog[4] || prog[4] === 'locked') {
+                prog[4] = 'current';
+            }
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(prog));
+            updateProgressUI();
+            showToast("Modul 03 selesai! Modul 04 (Keamanan & Privasi) telah terbuka 🎉", "🎉");
+
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+        }
+
+        function showToast(text, icon = "✅") {
+            const toast = document.getElementById('toastMsg');
+            document.getElementById('toastText').innerText = text;
+            document.getElementById('toastIcon').innerText = icon;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderLabTable();
+            renderQuiz();
+            updateProgressUI();
+        });
+    </script>
+</body>
+</html>
